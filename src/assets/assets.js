@@ -12,11 +12,13 @@ import LeatherSandals from "./images/LeatherSandals.jpg";
 import KroboBeads2 from "./images/KroboBeads2.avif";
 import KroboBeadsBracelet1 from "./images/KroboBeadsBracelet1.jpg";
 import Fugu from "./images/Fugu.avif";
+import Hero from "./images/hero.webp";
 
 
 
 export const assets = {
     logo,
+    Hero,
     WallHanging,
     AfricanFabric,
     BolgaMarketBasket,
