@@ -63,24 +63,16 @@ const Navbar = () => {
           <div className=" flex flex-col text-gray-600">
             <div
               onClick={() => setVisible(false)}
-              className="flex items-center gap24 p-3 cursor-pointer"
+              className="flex items-center gap-4 p-3 cursor-pointer"
             >
-              <X className="rotate-180" />
+              <X className="rotate-180 text-red-500" />
               <p>Back</p>
             </div>
             
-              <NavLink className="py-2 pl-6 border" to="/">
-                Home
-              </NavLink>
-              <NavLink className="py-2 pl-6 border" to="/collection">
-                COLLECTION
-              </NavLink>
-              <NavLink className="py-2 pl-6 border" to="/about">
-                ABOUT
-              </NavLink>
-              <NavLink className="py-2 pl-6 border" to="/contact">
-                CONTACT
-              </NavLink>
+              <NavLink onClick={()=> setVisible(false)} className="py-2 pl-6" to="/">HOME</NavLink>
+              <NavLink onClick={()=> setVisible(false)} className="py-2 pl-6 " to="/collection">COLLECTION</NavLink>
+              <NavLink onClick={()=> setVisible(false)} className="py-2 pl-6" to="/about">ABOUT</NavLink>
+              <NavLink onClick={()=> setVisible(false)} className="py-2 pl-6 " to="/contact">CONTACT</NavLink>
             
           </div>
         </div>
