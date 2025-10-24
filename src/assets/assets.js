@@ -43,7 +43,7 @@ export const products = [
     subCategory: "Necklace",
     size: ["One fits most"],
     date: 46,
-    bestSeller: true,
+    bestSeller: false,
   },
   {
     id: "",
@@ -82,7 +82,7 @@ export const products = [
     subCategory: "Sculptures",
     size: ["Small (8-inch)", "Medium (12-inch)"],
     date: 46,
-    bestSeller: true,
+    bestSeller: false,
   },
   {
     id: "",
@@ -121,7 +121,7 @@ export const products = [
     subCategory: "Bag",
     size: ["Free sizes"],
     date: 46,
-    bestSeller: true,
+    bestSeller: false,
   },
   {
     id: "",
@@ -147,7 +147,7 @@ export const products = [
     subCategory: "Men's Clothing",
     size: ["Medium", "Large", "X-Large"],
     date: 46,
-    bestSeller: true,
+    bestSeller: false,
   },
   {
     id: "",
@@ -156,8 +156,8 @@ export const products = [
       "Wear a masterpiece of Northern Ghanaian tradition. This authentic Fugu smock is meticulously hand-loomed from pure cotton and tailored for a flattering, feminine silhouette. More than just a dress, it's a piece of wearable art, featuring the intricate embroidery around the neckline that makes the Batakari so revered.",
     price: 290,
     image: [LadiesFuguSmock],
-    category: "",
-    subCategory: "",
+    category: "Fashion",
+    subCategory: "Women clothing ",
     size: ["Medium", "Large", "X-Large"],
     date: 46,
     bestSeller: true,
@@ -173,7 +173,7 @@ export const products = [
     subCategory: "Wall Art",
     size: ["Medium (12-inch)", "Large (18-inch)"],
     date: 46,
-    bestSeller: true,
+    bestSeller: false,
   },
   {
     id: "",
