@@ -1,6 +1,9 @@
 import React from 'react'
 
 const NewsLetter = () => {
+    const onSubmitHandler =(event) =>{
+        event.preventDefault();
+    }
   return (
     <div className=" text-center">
       <p className="text-2xl font-medium text-gray-600">
@@ -12,7 +15,7 @@ const NewsLetter = () => {
         offers. Subscribe now and enjoy 20% off your first order as our welcome
         gift.
       </p>
-      <form className="w-full sm:w-1/2 flex items-center gap-3 mx-auto my-6 border pl-3">
+      <form onSubmit={onSubmitHandler} className="w-full sm:w-1/2 flex items-center gap-3 mx-auto my-6 border pl-3">
         <input
           type="email"
           className="w-full sm:flex-1 outline-none"
