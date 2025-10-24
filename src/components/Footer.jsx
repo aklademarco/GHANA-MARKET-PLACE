@@ -37,7 +37,7 @@ const Footer = () => {
       <div>
         <hr />
         <p className=" py-5 text-sm text-center">
-          Copyright 2025@ ghanamarketplace.com - All Right Reserved.
+          &copy; 2025 ghanamarketplace.com - All Right Reserved.
         </p>
       </div>
     </div>
