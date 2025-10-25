@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { assets } from "../assets/assets";
-import { NavLink, Link } from "react-router";
+import { NavLink, Link } from "react-router-dom";
 import { Smile, Search, ShoppingCart, Menu, X } from "lucide-react";
 
 
@@ -19,7 +19,7 @@ const Navbar = () => {
           <p>HOME</p>
           <hr className=" w-2/4 border-none h-[1.5px] bg-gray-600 hidden" />
         </NavLink>
-        <NavLink to="/collection" className="flex flex-col items-center gap-1">
+        <NavLink to="/collections" className="flex flex-col items-center gap-1">
           <p>COLLECTION</p>
           <hr className=" w-2/4 border-none h-[1.5px] bg-gray-600 hidden" />
         </NavLink>
@@ -47,7 +47,7 @@ const Navbar = () => {
         </div>
         <Link to="/cart" className="relative">
           <ShoppingCart className="text-gray-500" size={24} />
-          <p className=" absolute right-[-5px] bottom-[-4px] w-4 text-center leading-4 bg-black text-white aspect-square rounded-full text-[8px]">
+          <p className=" absolute right-[-5px] bottom:-4px w-4 text-center leading-4 bg-black text-white aspect-square rounded-full text-[8px]">
             5
           </p>
         </Link>
@@ -57,7 +57,7 @@ const Navbar = () => {
         />
         <div
           className={`absolute  top-0 right-0  bg-white transition-all ${
-            visible ? "w-full" : "w-0"
+            visible ? "w-full sm:w-96" : "w-0"
           } overflow-y-auto z-50 `}
         >
           <div className=" flex flex-col text-gray-600">
@@ -70,7 +70,7 @@ const Navbar = () => {
             </div>
             
               <NavLink onClick={()=> setVisible(false)} className="py-2 pl-6" to="/">HOME</NavLink>
-              <NavLink onClick={()=> setVisible(false)} className="py-2 pl-6 " to="/collection">COLLECTION</NavLink>
+              <NavLink onClick={()=> setVisible(false)} className="py-2 pl-6 " to="/collections">COLLECTION</NavLink>
               <NavLink onClick={()=> setVisible(false)} className="py-2 pl-6" to="/about">ABOUT</NavLink>
               <NavLink onClick={()=> setVisible(false)} className="py-2 pl-6 " to="/contact">CONTACT</NavLink>
             
