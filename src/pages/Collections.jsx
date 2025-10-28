@@ -1,23 +1,29 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { shopContext } from "../context/shopContext";
 import { Menu, X, Filter, ChevronDown } from "lucide-react";
 import { Link } from "react-router-dom";
+import Title from "../components/Title";
+import ProductItems from "../components/ProductItems"
 
 const Collections = () => {
   const { products } = useContext(shopContext);
+  const [filterProducts, setFilterProducts] = useState([]);
+  useEffect(() => {
+    setFilterProducts(products);
+  }, []);
   const [visible, setVisible] = useState(false);
   const [openAccordion, setOpenAccordion] = useState(null);
   const toggleAccordion = (accordionName) => {
     if (openAccordion === accordionName) {
-      setOpenAccordion(null); 
+      setOpenAccordion(null);
     } else {
-      setOpenAccordion(accordionName); 
+      setOpenAccordion(accordionName);
     }
   };
 
   return (
     <div className="flex flex-col sm:flex-row gap-1 pt-10">
-      {/* filter options */}
+      {/* left side. filter options */}
 
       <div>
         <button
@@ -124,7 +130,6 @@ const Collections = () => {
                     >
                       Home Deco
                     </Link>
-                   
                   </div>
                 )}
               </div>
@@ -163,6 +168,32 @@ const Collections = () => {
               </div>
             </div>
           </div>
+        </div>
+      </div>
+
+      {/* right side . sort options */}
+      <div className="flex-1">
+        <div className="flex justify-between text-base sm:text-2xl mb-4">
+          <Title text1={"All"} text2={"Collections"} />
+          <div>
+            <p>Sort by: </p>
+            <select className="border-2 border-gray-300 text-sm px-2">
+              <option value="newest-arrivals">Newest Arrivals</option>
+              <option value="top-rated">Top Rated</option>
+              <option value="best-selling">Best Selling</option>
+              <option value="low-high">Low to High</option>
+              <option value="high-low">High to Low</option>
+            </select>
+          </div>
+        </div>
+
+        {/* Map Products */}
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 gap-y-6">
+          {
+            filterProducts.map((item,index)=>(
+              <ProductItems key={index} name={item.name} id={item.id} price={item.price} image={item.image}/>
+            ))
+          }
         </div>
       </div>
     </div>
