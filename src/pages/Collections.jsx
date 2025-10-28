@@ -1,9 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
 import { shopContext } from "../context/shopContext";
-import { Menu, X, Filter, ChevronDown } from "lucide-react";
+import { Menu, X, Filter, ChevronDown, FileHeartIcon } from "lucide-react";
 import { Link } from "react-router-dom";
 import Title from "../components/Title";
-import ProductItems from "../components/ProductItems"
+import ProductItems from "../components/ProductItems";
 
 const Collections = () => {
   const { products } = useContext(shopContext);
@@ -13,12 +13,88 @@ const Collections = () => {
   }, []);
   const [visible, setVisible] = useState(false);
   const [openAccordion, setOpenAccordion] = useState(null);
-  const toggleAccordion = (accordionName) => {
-    if (openAccordion === accordionName) {
-      setOpenAccordion(null);
-    } else {
-      setOpenAccordion(accordionName);
+
+  // Filter states
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedPriceRange, setSelectedPriceRange] = useState("");
+  const [selectedAvailability, setSelectedAvailability] = useState("");
+  const [sortBy, setSortBy] = useState("newest-arival");
+
+  useEffect(() => {
+    setFilterProducts(products);
+  }, [products]);
+
+  useEffect(() => {
+    let filtered = [...products];
+
+    if (selectedCategory) {
+      filtered = filtered.filter(
+        (item) =>
+          item.category?.toLowerCase() === selectedCategory.toLowerCase()
+      );
     }
+    if (selectedPriceRange) {
+      const [min, max] = selectedPriceRange.split("-").map(Number);
+      filtered = filtered.filter(
+        (item) => item.price >= min && item.price <= max
+      );
+    }
+    if (selectedAvailability) {
+      filtered = filtered.filter((item) => {
+        if (selectedAvailability === "in-stock") return item.inStock === true;
+        if (selectedAvailability === "out-of-stock")
+          return item.inStock === false;
+        return true;
+      });
+    }
+
+    switch (sortBy) {
+      case "low-high":
+        filtered.sort((a, b) => a.price - b.price);
+        break;
+      case "high-low":
+        filtered.sort((a, b) => b.price - a.price);
+        break;
+      case "best-selling":
+        filtered.sort((a, b) => (b.sales || 0) - (a.sales || 0));
+        break;
+      case "top-rated":
+        filtered.sort((a, b) => (b.rating || 0) - (a.rating || 0));
+        break;
+    }
+
+    setFilterProducts(filtered);
+  }, [
+    products,
+    selectedCategory,
+    selectedPriceRange,
+    selectedAvailability,
+    sortBy,
+  ]);
+
+  const toggleAccordion = (accordionName) => {
+    setOpenAccordion(openAccordion === accordionName ? null : accordionName);
+  };
+
+  const handleFilterClick = (filterType, value) => {
+    switch (filterType) {
+      case "category":
+        setSelectedCategory(selectedCategory === value ? "" : value);
+        break;
+      case "price":
+        setSelectedPriceRange(selectedPriceRange === value ? "" : value);
+        break;
+      case "availability":
+        setSelectedAvailability(selectedAvailability === value ? "" : value);
+        break;
+    }
+    setVisible(false);
+  };
+
+  const clearFilters = () => {
+    setSelectedCategory("");
+    setSelectedPriceRange("");
+    setSelectedAvailability("");
   };
 
   return (
@@ -48,6 +124,15 @@ const Collections = () => {
             </div>
 
             <div className="w-full">
+              <div>
+                <button
+                  onClick={() => clearFilters('')}
+                  className="flex items-center justify-between w-full py-3 px-6 border-b"
+                >
+                  <span>All</span>
+                </button>
+              </div>
+
               {/* --- Price Accordion --- */}
               <div>
                 <button
@@ -63,20 +148,36 @@ const Collections = () => {
                 </button>
                 {openAccordion === "price" && (
                   <div className="pl-10 bg-gray-50">
-                    <Link
-                      onClick={() => setVisible(false)}
-                      className="block py-2"
-                      to="/collection?price=0-100"
+                    <button
+                      onClick={() => handleFilterClick("price", "0-100")}
+                      className={`block py-2 w-full text-left ${
+                        selectedPriceRange === "0-100"
+                          ? "font-bold text-blue-600"
+                          : ""
+                      }`}
                     >
                       GHC 0 - 100
-                    </Link>
-                    <Link
-                      onClick={() => setVisible(false)}
-                      className="block py-2"
-                      to="/collection?price=100-250"
+                    </button>
+                    <button
+                      onClick={() => handleFilterClick("price", "100-250")}
+                      className={`block py-2 w-full text-left ${
+                        selectedPriceRange === "100-250"
+                          ? "font-bold text-blue-600"
+                          : ""
+                      }`}
                     >
                       GHC 100 - 250
-                    </Link>
+                    </button>
+                    <button
+                      onClick={() => handleFilterClick("price", "250-500")}
+                      className={`block py-2 w-full text-left ${
+                        selectedPriceRange === "250-500"
+                          ? "font-bold text-blue-600"
+                          : ""
+                      }`}
+                    >
+                      GHC 250 - 500
+                    </button>
                   </div>
                 )}
               </div>
@@ -95,41 +196,60 @@ const Collections = () => {
                 </button>
                 {openAccordion === "category" && (
                   <div className="pl-10 bg-gray-50">
-                    <Link
-                      onClick={() => setVisible(false)}
-                      className="block py-2"
-                      to="/collection?category=jewelry"
+                    <button
+                      onClick={() => handleFilterClick("category", "jewelry")}
+                      className={`block py-2 w-full text-left ${
+                        selectedCategory === "jewelry"
+                          ? "font-bold text-blue-600"
+                          : ""
+                      }`}
                     >
                       Jewelry
-                    </Link>
-                    <Link
-                      onClick={() => setVisible(false)}
-                      className="block py-2"
-                      to="/collection?category=fashion"
+                    </button>
+                    <button
+                      onClick={() => handleFilterClick("category", "fashion")}
+                      className={`block py-2 w-full text-left ${
+                        selectedCategory === "fashion"
+                          ? "font-bold text-blue-600"
+                          : ""
+                      }`}
                     >
                       Fashion
-                    </Link>
-                    <Link
-                      onClick={() => setVisible(false)}
-                      className="block py-2"
-                      to="/collection?category=fashion"
+                    </button>
+                    <button
+                      onClick={() =>
+                        handleFilterClick("category", "craft supplies")
+                      }
+                      className={`block py-2 w-full text-left ${
+                        selectedCategory === "craft supplies"
+                          ? "font-bold text-blue-600"
+                          : ""
+                      }`}
                     >
                       Craft Supplies
-                    </Link>
-                    <Link
-                      onClick={() => setVisible(false)}
-                      className="block py-2"
-                      to="/collection?category=fashion"
+                    </button>
+                    <button
+                      onClick={() =>
+                        handleFilterClick("category", "baskets & bags")
+                      }
+                      className={`block py-2 w-full text-left ${
+                        selectedCategory === "baskets & bags"
+                          ? "font-bold text-blue-600"
+                          : ""
+                      }`}
                     >
                       Baskets & Bags
-                    </Link>
-                    <Link
-                      onClick={() => setVisible(false)}
-                      className="block py-2"
-                      to="/collection?category=fashion"
+                    </button>
+                    <button
+                      onClick={() => handleFilterClick("category", "home deco")}
+                      className={`block py-2 w-full text-left ${
+                        selectedCategory === "home deco"
+                          ? "font-bold text-blue-600"
+                          : ""
+                      }`}
                     >
                       Home Deco
-                    </Link>
+                    </button>
                   </div>
                 )}
               </div>
@@ -149,20 +269,30 @@ const Collections = () => {
                 </button>
                 {openAccordion === "availability" && (
                   <div className="pl-10 bg-gray-50">
-                    <Link
-                      onClick={() => setVisible(false)}
-                      className="block py-2"
-                      to="/collection?availability=in-stock"
+                    <button
+                      onClick={() =>
+                        handleFilterClick("availability", "in-stock")
+                      }
+                      className={`block py-2 w-full text-left ${
+                        selectedAvailability === "in-stock"
+                          ? "font-bold text-blue-600"
+                          : ""
+                      }`}
                     >
                       In Stock
-                    </Link>
-                    <Link
-                      onClick={() => setVisible(false)}
-                      className="block py-2"
-                      to="/collection?availability=out-of-stock"
+                    </button>
+                    <button
+                      onClick={() =>
+                        handleFilterClick("availability", "out-of-stock")
+                      }
+                      className={`block py-2 w-full text-left ${
+                        selectedAvailability === "out-of-stock"
+                          ? "font-bold text-blue-600"
+                          : ""
+                      }`}
                     >
                       Out of Stock
-                    </Link>
+                    </button>
                   </div>
                 )}
               </div>
@@ -177,7 +307,11 @@ const Collections = () => {
           <Title text1={"All"} text2={"Collections"} />
           <div>
             <p>Sort by: </p>
-            <select className="border-2 border-gray-300 text-sm px-2">
+            <select
+              className="border-2 border-gray-300 text-sm px-2"
+              value={sortBy}
+              onChange={(e) => setSortBy(e.target.value)}
+            >
               <option value="newest-arrivals">Newest Arrivals</option>
               <option value="top-rated">Top Rated</option>
               <option value="best-selling">Best Selling</option>
@@ -189,11 +323,15 @@ const Collections = () => {
 
         {/* Map Products */}
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 gap-y-6">
-          {
-            filterProducts.map((item,index)=>(
-              <ProductItems key={index} name={item.name} id={item.id} price={item.price} image={item.image}/>
-            ))
-          }
+          {filterProducts.map((item, index) => (
+            <ProductItems
+              key={index}
+              name={item.name}
+              id={item.id}
+              price={item.price}
+              image={item.image}
+            />
+          ))}
         </div>
       </div>
     </div>
