@@ -33,7 +33,7 @@ export const assets = {
 
 export const products = [
   {
-    id: "22",
+    id: "0001",
     name: "Unique tooth Pendant Necklace",
     description: `This one-of-a-kind necklace features a hand-sculpted ceramic pendant shaped like a    tooth. Natural wooden beads and a braided hemp cord complement the ceramic's rustic, organic feel. The necklace is adjustable, allowing you to find your perfect fit.
     Handcrafted Ceramic Pendant: This necklace's focal point is a unique ceramic pendant sculpted by hand into a face design. Each pendant is one-of-a-kind, showcasing the artistry of the maker."`,
@@ -44,9 +44,10 @@ export const products = [
     size: ["One fits most"],
     date: 46,
     bestSeller: false,
+    inStock: true,
   },
   {
-    id: "12",
+    id: "0002",
     name: "Vibrant Ankara Wax Print Fabric",
     description:
       "A full 6-yard piece of high-quality, authentic wax-print Ankara fabric. Perfect for creating stunning dresses, shirts, headwraps, or home decor projects. The bold, geometric pattern is a classic example of West African design.",
@@ -57,9 +58,10 @@ export const products = [
     size: ["6 Yards"],
     date: 46,
     bestSeller: true,
+    inStock: true,
   },
   {
-    id: "",
+    id: "0003",
     name: "Handwoven Bolga Market Basket",
     description:
       "A durable and beautiful all-purpose basket, handwoven from tough elephant grass by artisans in Bolgatanga. Features a sturdy leather-wrapped handle, making it perfect for markets, picnics, or home storage",
@@ -70,9 +72,10 @@ export const products = [
     size: ["Large"],
     date: 46,
     bestSeller: true,
+    inStock: true,
   },
   {
-    id: "",
+    id: "0004",
     name: "Hand-Carved Wooden Unity Statue",
     description:
       "A powerful and symbolic statue hand-carved from a single piece of Sese wood. It depicts a circle of figures holding hands, representing family, community, and the strength of unity. A meaningful and elegant addition to any desk or bookshelf.",
@@ -83,9 +86,10 @@ export const products = [
     size: ["Small (8-inch)", "Medium (12-inch)"],
     date: 46,
     bestSeller: false,
+    inStock: true,
   },
   {
-    id: "",
+    id: "0005",
     name: "Hand-Carved Akan Akuaba Walking Stick",
     description:
       "A stunning, hand-carved walking stick made from rich Sese wood by Ghanaian artisans. The handle features an authentic Akan Akuaba, a powerful cultural symbol of fertility, beauty, and good fortune. With its iconic large, disc-like head and ringed neck, this piece is both a functional walking aid and a powerful work of art.",
@@ -96,9 +100,10 @@ export const products = [
     size: ["Standard (Approx. 36 inches / 91 cm)"],
     date: 46,
     bestSeller: true,
+    inStock: false,
   },
   {
-    id: "",
+    id: "0006",
     name: "Colorful Recycled Glass Krobo Bracelet",
     description:
       "A vibrant, stretchable bracelet handcrafted by artisans in the Krobo region. Made from recycled glass beads, each piece is unique and eco-friendly. Perfect for stacking or as a standalone statement.",
@@ -109,9 +114,10 @@ export const products = [
     size: ["One Size Fits Most"],
     date: 46,
     bestSeller: true,
+    inStock: true,
   },
   {
-    id: "",
+    id: "0007",
     name: "Ghana eco totebag",
     description:
       "Meet your new favorite bag. This eco-friendly tote is made from 100% durable cotton canvas, perfect for replacing plastic. Its clean, minimalist design and sturdy straps make it the ideal companion for the market, the beach, or a coffee run. A stylish way to show you care.",
@@ -122,9 +128,10 @@ export const products = [
     size: ["Free sizes"],
     date: 46,
     bestSeller: false,
+    inStock: true,
   },
   {
-    id: "",
+    id: "0008",
     name: "Authentic Handwoven Kente Cloth",
     description:
       "Own a true piece of Ghanaian royalty. This authentic Kente cloth is meticulously handwoven by master artisans in the Ashanti region, not a cheap print. Each vibrant, symbolic pattern is woven from high-quality cotton and rayon threads. This is the official fabric for creating stunning, one-of-a-kind dresses, gowns, or formal wear for weddings, graduations, and festivals.",
@@ -135,9 +142,10 @@ export const products = [
     size: ["2 Yards", "4 Yards", "6 Yards (Full Piece)"],
     date: 46,
     bestSeller: true,
+    inStock: false,
   },
   {
-    id: "",
+    id: "0009",
     name: "Traditional Northern Ghana Fugu Tunic",
     description:
       "Also known as a Batakari, this authentic tunic is made from hand-loomed strips of cotton, a traditional craft from Northern Ghana. It's a striking and durable piece of wearable art, perfect for formal events or casual wear",
@@ -148,9 +156,10 @@ export const products = [
     size: ["Medium", "Large", "X-Large"],
     date: 46,
     bestSeller: false,
+    inStock: true,
   },
   {
-    id: "",
+    id: "0010",
     name: "Ladies Fugu Smock",
     description:
       "Wear a masterpiece of Northern Ghanaian tradition. This authentic Fugu smock is meticulously hand-loomed from pure cotton and tailored for a flattering, feminine silhouette. More than just a dress, it's a piece of wearable art, featuring the intricate embroidery around the neckline that makes the Batakari so revered.",
@@ -161,9 +170,10 @@ export const products = [
     size: ["Medium", "Large", "X-Large"],
     date: 46,
     bestSeller: true,
+    inStock: true,
   },
   {
-    id: "",
+    id: "0011",
     name: "Hand-Carved Adinkra Wall Hanging",
     description:
       "Hand-Carved Adinkra Wall Hanging description: Bring authentic Ghanaian heritage into your home. This beautiful wall plaque is hand-carved from local Sese wood and features the 'Gye Nyame' Adinkra symbol, representing the supremacy of God.",
@@ -174,9 +184,10 @@ export const products = [
     size: ["Medium (12-inch)", "Large (18-inch)"],
     date: 46,
     bestSeller: false,
+    inStock: true,
   },
   {
-    id: "",
+    id: "0012",
     name: "Royal Ahenema",
     description:
       "Experience true Ghanaian craftsmanship. These Ahenema sandals are handmade by skilled artisans in Kumasi, following the same methods used to create footwear for royalty. Crafted from durable, high-quality leather and finished with a classic, symbolic design, they are the essential footwear for pairing with Kente or Fugu at any prestigious event.",
@@ -187,5 +198,6 @@ export const products = [
     size: ["EU 39", "EU 40", "EU 41", "EU 42", "EU 43", "EU 44", "EU 45"],
     date: 46,
     bestSeller: true,
-  }
+    inStock: false,
+  },
 ];

@@ -1,6 +1,5 @@
 import { create } from "zustand";
-import {products as initialProducts} from '../assets/assets';
-import { Currency } from "lucide-react";
+import { products as initialProducts } from "../assets/assets";
 export const useStore = create((set, get) => ({
   products: initialProducts,
   Currency: "GH₵",
@@ -11,6 +10,45 @@ export const useStore = create((set, get) => ({
   selectedPriceRange: "",
   selectedAvailability: "",
   sortBy: "Newest-arrivals",
+
+  // cart state + actions
+  cart: [],
+  addToCart: (product, qty = 1) =>
+    set((s) => {
+      const cart = [...s.cart];
+      const idx = cart.findIndex((c) => c.id === product.id);
+      if (idx > -1) {
+        // update qty
+        cart[idx] = { ...cart[idx], qty: (cart[idx].qty || 1) + qty };
+      } else {
+        cart.push({
+          id: product.id,
+          name: product.name,
+          price: product.price,
+          image: Array.isArray(product.image)
+            ? product.image[0]
+            : product.image || product.thumbnail || "",
+          qty,
+        });
+      }
+      return { cart };
+    }),
+  removeFromCart: (productId) =>
+    set((s) => ({ cart: s.cart.filter((c) => c.id !== productId) })),
+  clearCart: () => set({ cart: [] }),
+
+  // utility to get related products (non-mutating)
+  getRelatedProducts: (productId, category, limit = 4) => {
+    const { products } = get();
+    if (!category) return [];
+    return products
+      .filter(
+        (p) =>
+          p.id !== productId &&
+          (p.category || "").toLowerCase() === (category || "").toLowerCase()
+      )
+      .slice(0, limit);
+  },
 
   setSearch: (q) => set({ search: q }),
   setShowSearch: (v) => set({ showSearch: v }),
