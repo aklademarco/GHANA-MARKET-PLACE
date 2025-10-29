@@ -1,16 +1,16 @@
-import React, { useContext, useEffect, useState } from 'react'
-import { shopContext } from '../context/shopContext'
-import Title from './Title';
-import ProductItems from './ProductItems';
+import React, { useEffect, useState } from "react";
+import { useStore } from "../context/store";
+import Title from "./Title";
+import ProductItems from "./ProductItems";
 
 const LatestCollection = () => {
-    const { products } = useContext(shopContext);
-      console.log(products);
-    const [LatestProducts, setLatestProducts] = useState([]);   
+  const products = useStore((s) => s.products);
+  console.log(products);
+  const [LatestProducts, setLatestProducts] = useState([]);
 
-useEffect (()=> {
-  setLatestProducts(products.slice(0,12));
-}, [])
+  useEffect(() => {
+    setLatestProducts(products.slice(0, 12));
+  }, [products]);
   return (
     <div className="my-10 ">
       <div className="text-center py-8 text-3xl">
@@ -21,14 +21,19 @@ useEffect (()=> {
         </p>
       </div>
       {/* Rendering Products */}
-    <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 gap-4 gap-y-6'>
-   { LatestProducts.map((item,index) => (
-      <ProductItems key={index} di={item.id} image={item.image} name={item.name} price={item.price} />
-    ))
-  }
-    </div>
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 gap-4 gap-y-6">
+        {LatestProducts.map((item, index) => (
+          <ProductItems
+            key={index}
+            id={item.id}
+            image={item.image}
+            name={item.name}
+            price={item.price}
+          />
+        ))}
+      </div>
     </div>
   );
-}
+};
 
-export default LatestCollection
+export default LatestCollection;

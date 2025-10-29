@@ -1,15 +1,15 @@
-import React, { useContext, useEffect, useState } from 'react'
-import { shopContext } from '../context/shopContext'
-import Title from './Title';
+import React, { useEffect, useState } from "react";
+import { useStore } from "../context/store";
+import Title from "./Title";
 import ProductItems from "./ProductItems";
 
-const bestSeller = () => {
-    const {products}= useContext(shopContext);
-    const [bestSeller,setBestSeller] = useState([]);
-    useEffect (()=>{
-        const bestProduct = products.filter((item)=>(item.bestSeller));
-        setBestSeller(bestProduct.slice(0,6))
-    },[])
+const BestSeller = () => {
+  const products = useStore((s) => s.products);
+  const [bestSeller, setBestSeller] = useState([]);
+  useEffect(() => {
+    const bestProduct = products.filter((item) => item.bestSeller);
+    setBestSeller(bestProduct.slice(0, 6));
+  }, [products]);
   return (
     <div className="my-10">
       <div className="text-center text-3xl py-8">
@@ -24,7 +24,7 @@ const bestSeller = () => {
         {bestSeller.map((item, index) => (
           <ProductItems
             key={index}
-            di={item.id}
+            id={item.id}
             image={item.image}
             name={item.name}
             price={item.price}
@@ -33,6 +33,6 @@ const bestSeller = () => {
       </div>
     </div>
   );
-}
+};
 
-export default bestSeller
+export default BestSeller;

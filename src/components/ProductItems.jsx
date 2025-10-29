@@ -1,9 +1,9 @@
-import React, { useContext } from 'react'
-import { shopContext } from '../context/shopContext'
-import {Link} from 'react-router'
+import React from "react";
+import { useStore } from "../context/store";
+import { Link } from "react-router-dom";
 
-const ProductItems = ({id, name, price, image}) => {
-    const {currency} = useContext(shopContext)
+const ProductItems = ({ id, name, price, image }) => {
+  const currency = useStore((s) => s.Currency);
   return (
     <Link className="text-gray-700 cursor-pointer" to={`/product/${id}`}>
       <div className="overflow-hidden">
@@ -20,6 +20,6 @@ const ProductItems = ({id, name, price, image}) => {
       </div>
     </Link>
   );
-}
+};
 
-export default ProductItems
+export default ProductItems;

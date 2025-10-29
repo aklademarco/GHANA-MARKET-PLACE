@@ -1,13 +1,11 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { assets } from "../assets/assets";
 import { NavLink, Link } from "react-router-dom";
 import { Smile, Search, ShoppingCart, Menu, X } from "lucide-react";
-import { shopContext } from "../context/shopContext";
-
-
+import { useStore } from "../context/store";
 
 const Navbar = () => {
-  const {setShowSearch} = useContext(shopContext);
+  const setShowSearch = useStore((s) => s.setShowSearch);
   const [visible, setVisible] = useState(false);
   return (
     <div className=" flex items-center justify-between py-5 font-sans relative">
@@ -35,10 +33,14 @@ const Navbar = () => {
         </NavLink>
       </ul>
       <div className="flex items-center gap-6">
-        <Search onClick={() => setShowSearch(true)} className="text-gray-500" size={24} />
+        <Search
+          onClick={() => setShowSearch(true)}
+          className="text-gray-500 cursor-pointer"
+          size={24}
+        />
 
         <div className="group relative">
-          <Smile className="text-gray-500" size={24} />
+          <Smile className="text-gray-500 cursor-pointer" size={24} />
           <div className=" group-hover:block hidden absolute dropdown-men right-0 pt-4">
             <div className="flex flex-col gap-2 w-36 py-3 px-5 bg-slate-100 text-gray-500 rounded">
               <p className="cursor-pointer hover:text-black">My Profile</p>
@@ -70,12 +72,35 @@ const Navbar = () => {
               <X className="rotate-180 text-red-500" />
               <p>Back</p>
             </div>
-            
-              <NavLink onClick={()=> setVisible(false)} className="py-2 pl-6" to="/">HOME</NavLink>
-              <NavLink onClick={()=> setVisible(false)} className="py-2 pl-6 " to="/collections">COLLECTION</NavLink>
-              <NavLink onClick={()=> setVisible(false)} className="py-2 pl-6" to="/about">ABOUT</NavLink>
-              <NavLink onClick={()=> setVisible(false)} className="py-2 pl-6 " to="/contact">CONTACT</NavLink>
-            
+
+            <NavLink
+              onClick={() => setVisible(false)}
+              className="py-2 pl-6"
+              to="/"
+            >
+              HOME
+            </NavLink>
+            <NavLink
+              onClick={() => setVisible(false)}
+              className="py-2 pl-6 "
+              to="/collections"
+            >
+              COLLECTION
+            </NavLink>
+            <NavLink
+              onClick={() => setVisible(false)}
+              className="py-2 pl-6"
+              to="/about"
+            >
+              ABOUT
+            </NavLink>
+            <NavLink
+              onClick={() => setVisible(false)}
+              className="py-2 pl-6 "
+              to="/contact"
+            >
+              CONTACT
+            </NavLink>
           </div>
         </div>
       </div>

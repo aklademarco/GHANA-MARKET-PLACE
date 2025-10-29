@@ -33,7 +33,7 @@ export const assets = {
 
 export const products = [
   {
-    id: "",
+    id: "22",
     name: "Unique tooth Pendant Necklace",
     description: `This one-of-a-kind necklace features a hand-sculpted ceramic pendant shaped like a    tooth. Natural wooden beads and a braided hemp cord complement the ceramic's rustic, organic feel. The necklace is adjustable, allowing you to find your perfect fit.
     Handcrafted Ceramic Pendant: This necklace's focal point is a unique ceramic pendant sculpted by hand into a face design. Each pendant is one-of-a-kind, showcasing the artistry of the maker."`,
@@ -46,7 +46,7 @@ export const products = [
     bestSeller: false,
   },
   {
-    id: "",
+    id: "12",
     name: "Vibrant Ankara Wax Print Fabric",
     description:
       "A full 6-yard piece of high-quality, authentic wax-print Ankara fabric. Perfect for creating stunning dresses, shirts, headwraps, or home decor projects. The bold, geometric pattern is a classic example of West African design.",

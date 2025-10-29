@@ -22,7 +22,7 @@ const Hero = () => {
             Latest Arrivals
           </h1>
           <div className="flex items-center gap-2">
-            <Link to="/collection" className="flex items-center gap-2">
+            <Link to="/collections" className="flex items-center gap-2">
               <p className="font-semibold text-sm md:text-base bg-green-200 rounded-2xl border p-2">
                 {" "}
                 SHOP NOW

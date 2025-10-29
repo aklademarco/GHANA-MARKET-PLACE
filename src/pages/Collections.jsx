@@ -1,16 +1,14 @@
-import React, { useContext, useEffect, useState } from "react";
-import { shopContext } from "../context/shopContext";
+import React, { useEffect, useState } from "react";
+import { useStore } from "../context/store";
 import { Menu, X, Filter, ChevronDown, FileHeartIcon } from "lucide-react";
 import { Link } from "react-router-dom";
 import Title from "../components/Title";
 import ProductItems from "../components/ProductItems";
 
 const Collections = () => {
-  const { products } = useContext(shopContext);
+  const products = useStore((s) => s.products);
+  const search = useStore((s) => s.search);
   const [filterProducts, setFilterProducts] = useState([]);
-  useEffect(() => {
-    setFilterProducts(products);
-  }, []);
   const [visible, setVisible] = useState(false);
   const [openAccordion, setOpenAccordion] = useState(null);
 
@@ -26,6 +24,18 @@ const Collections = () => {
 
   useEffect(() => {
     let filtered = [...products];
+
+    // search filter
+
+    if (search && search.trim() !== "") {
+      const q = search.trim().toLowerCase();
+      filtered = filtered.filter((item) => {
+        const name = (item.name || "").toLowerCase();
+        const category = (item.category || "").toLowerCase();
+        const desc = (item.description || "").toLowerCase();
+        return name.includes(q) || category.includes(q) || desc.includes(q);
+      });
+    }
 
     if (selectedCategory) {
       filtered = filtered.filter(
@@ -65,6 +75,7 @@ const Collections = () => {
 
     setFilterProducts(filtered);
   }, [
+    search,
     products,
     selectedCategory,
     selectedPriceRange,
@@ -126,7 +137,7 @@ const Collections = () => {
             <div className="w-full">
               <div>
                 <button
-                  onClick={() => clearFilters('')}
+                  onClick={() => clearFilters("")}
                   className="flex items-center justify-between w-full py-3 px-6 border-b"
                 >
                   <span>All</span>
