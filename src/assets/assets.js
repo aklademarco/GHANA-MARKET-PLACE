@@ -45,6 +45,7 @@ export const products = [
     date: 46,
     bestSeller: false,
     inStock: true,
+    rating: 2,
   },
   {
     id: "0002",
@@ -59,6 +60,7 @@ export const products = [
     date: 46,
     bestSeller: true,
     inStock: true,
+    rating: 4,
   },
   {
     id: "0003",
@@ -73,6 +75,7 @@ export const products = [
     date: 46,
     bestSeller: true,
     inStock: true,
+    rating: 2,
   },
   {
     id: "0004",
@@ -87,6 +90,7 @@ export const products = [
     date: 46,
     bestSeller: false,
     inStock: true,
+    rating: 3,
   },
   {
     id: "0005",
@@ -101,6 +105,7 @@ export const products = [
     date: 46,
     bestSeller: true,
     inStock: false,
+    rating: 2,
   },
   {
     id: "0006",
@@ -115,6 +120,7 @@ export const products = [
     date: 46,
     bestSeller: true,
     inStock: true,
+    rating: 1,
   },
   {
     id: "0007",
@@ -129,6 +135,7 @@ export const products = [
     date: 46,
     bestSeller: false,
     inStock: true,
+    rating: 5,
   },
   {
     id: "0008",
@@ -143,6 +150,7 @@ export const products = [
     date: 46,
     bestSeller: true,
     inStock: false,
+    rating: 3.5,
   },
   {
     id: "0009",
@@ -157,6 +165,7 @@ export const products = [
     date: 46,
     bestSeller: false,
     inStock: true,
+    rating: 2,
   },
   {
     id: "0010",
@@ -171,6 +180,7 @@ export const products = [
     date: 46,
     bestSeller: true,
     inStock: true,
+    rating: 2,
   },
   {
     id: "0011",
@@ -185,6 +195,7 @@ export const products = [
     date: 46,
     bestSeller: false,
     inStock: true,
+    rating: 3,
   },
   {
     id: "0012",
@@ -199,5 +210,6 @@ export const products = [
     date: 46,
     bestSeller: true,
     inStock: false,
+    rating: 2,
   },
 ];
