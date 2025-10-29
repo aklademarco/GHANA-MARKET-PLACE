@@ -1,6 +1,7 @@
 import React from "react";
 import { useParams } from "react-router";
 import { useStore } from "../context/store";
+import { Link } from "react-router-dom";
 
 const StarRating = ({ rating = 0, max = 5 }) => {
   const full = Math.round(Math.max(0, Math.min(rating, max)));
@@ -54,13 +55,13 @@ const Product = () => {
       {/* Breadcrumb */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-4">
         <div className="flex items-center gap-2 text-sm text-gray-600">
-          <a href="/" className="hover:text-gray-900">
+          <Link to={"/"} className="hover:text-gray-900">
             Home
-          </a>
+          </Link>
           <span>/</span>
-          <a href="/collection" className="hover:text-gray-900">
+          <Link to={"/collection"} className="hover:text-gray-900">
             Collection
-          </a>
+          </Link>
           <span>/</span>
           <span className="text-gray-900 font-medium">{product.name}</span>
         </div>
@@ -227,9 +228,9 @@ const Product = () => {
                   ? p.image[0]
                   : p.image || p.thumbnail || "";
                 return (
-                  <a
+                  <Link
                     key={p.id}
-                    href={`/product/${p.id}`}
+                    to={`/product/${p.id}`}
                     className="group block"
                   >
                     <div className="aspect-square w-full overflow-hidden rounded-lg bg-gray-100 mb-3">
@@ -253,7 +254,7 @@ const Product = () => {
                       {Currency}
                       {p.price}
                     </p>
-                  </a>
+                  </Link>
                 );
               })}
             </div>
