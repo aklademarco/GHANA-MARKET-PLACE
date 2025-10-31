@@ -1,6 +1,7 @@
 import React from "react";
 import { useParams } from "react-router";
 import { useStore } from "../context/store";
+import { useCartStore } from "../context/cartStore";
 import { Link } from "react-router-dom";
 
 const StarRating = ({ rating = 0, max = 5 }) => {
@@ -16,10 +17,11 @@ const StarRating = ({ rating = 0, max = 5 }) => {
 
 const Product = () => {
   const { productId } = useParams();
+  const [selectedSize, setSelectedSize] = React.useState("");
 
   const products = useStore((s) => s.products);
-  const addToCart = useStore((s) => s.addToCart);
   const Currency = useStore((s) => s.Currency);
+  const addToCart = useCartStore((s) => s.addToCart);
 
   const product = React.useMemo(
     () => products.find((item) => item.id?.toString() === productId),
@@ -147,9 +149,39 @@ const Product = () => {
               </p>
             </div>
 
+            {/* Size Selection */}
+            {product.size && product.size.length > 0 && (
+              <div className="border-t border-gray-200 pt-6">
+                <p className="text-sm font-medium text-gray-900 mb-3">
+                  Select Size:
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  {product.size.map((s) => (
+                    <button
+                      key={s}
+                      onClick={() => setSelectedSize(s)}
+                      className={`px-4 py-2 border rounded-lg text-sm font-medium transition ${
+                        selectedSize === s
+                          ? "bg-black text-white border-black"
+                          : "bg-white text-gray-700 border-gray-300 hover:border-gray-400"
+                      }`}
+                    >
+                      {s}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+
             <div className="border-t border-gray-200 pt-6 space-y-4">
               <button
-                onClick={() => addToCart(product, 1)}
+                onClick={() => {
+                  console.log("Add to cart clicked", {
+                    productId: product.id,
+                    selectedSize,
+                  });
+                  addToCart(product.id, selectedSize);
+                }}
                 disabled={!product.inStock}
                 className="w-full bg-black hover:bg-gray-800 text-white font-medium py-4 px-8 rounded-lg transition disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-black"
               >

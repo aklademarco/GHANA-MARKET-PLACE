@@ -3,10 +3,18 @@ import { assets } from "../assets/assets";
 import { NavLink, Link } from "react-router-dom";
 import { Smile, Search, ShoppingCart, Menu, X } from "lucide-react";
 import { useStore } from "../context/store";
+import { useCartStore } from "../context/cartStore";
 
 const Navbar = () => {
   const setShowSearch = useStore((s) => s.setShowSearch);
+  const cartItems = useCartStore((s) => s.cartItems);
   const [visible, setVisible] = useState(false);
+
+  // Calculate cart count from cartItems
+  const cartCount = Object.values(cartItems).reduce((total, sizes) => {
+    return total + Object.values(sizes).reduce((sum, qty) => sum + qty, 0);
+  }, 0);
+
   return (
     <div className=" flex items-center justify-between py-5 font-sans relative">
       <img
@@ -51,9 +59,11 @@ const Navbar = () => {
         </div>
         <Link to="/cart" className="relative">
           <ShoppingCart className="text-gray-500" size={24} />
-          <p className=" absolute right-[-5px] bottom:-4px w-4 text-center leading-4 bg-black text-white aspect-square rounded-full text-[8px]">
-            5
-          </p>
+          {cartCount > 0 && (
+            <p className=" absolute right-[-5px] bottom-[-4px] w-4 text-center leading-4 bg-black text-white aspect-square rounded-full text-[8px]">
+              {cartCount}
+            </p>
+          )}
         </Link>
         <Menu
           onClick={() => setVisible(true)}
