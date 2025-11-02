@@ -14,7 +14,7 @@ const SellerShop = () => {
     name: "Kwame's Authentic Crafts",
     description:
       "Master craftsman specializing in traditional Ghanaian wood carvings and sculptures. Family business passed down through 3 generations.",
-    avatar: "https://via.placeholder.com/150",
+    avatar: "https://avatar.iran.liara.run/public/boy",
     location: "Kumasi, Ashanti Region",
     phone: "+233 24 123 4567",
     email: "kwame@crafts.com",
@@ -35,7 +35,7 @@ const SellerShop = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="flex flex-col md:flex-row gap-6">
             {/* Shop Avatar */}
-            <div className="flex-shrink-0">
+            <div className="shrink-0">
               <div className="w-32 h-32 bg-gray-200 rounded-full overflow-hidden">
                 <img
                   src={seller.avatar}
