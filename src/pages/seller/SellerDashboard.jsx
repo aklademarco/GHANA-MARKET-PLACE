@@ -72,9 +72,7 @@ const SellerDashboard = () => {
               <div className="bg-blue-100 p-3 rounded-lg">
                 <ShoppingBag className="text-blue-600" size={24} />
               </div>
-              <span className="text-blue-600 text-sm font-semibold">
-                +8.2%
-              </span>
+              <span className="text-blue-600 text-sm font-semibold">+8.2%</span>
             </div>
             <h3 className="text-gray-600 text-sm mb-1">Total Orders</h3>
             <p className="text-2xl font-bold text-gray-900">

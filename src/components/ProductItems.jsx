@@ -5,7 +5,7 @@ import { Store } from "lucide-react";
 
 const ProductItems = ({ id, name, price, image, sellerId }) => {
   const currency = useStore((s) => s.Currency);
-  
+
   return (
     <div className="text-gray-700 cursor-pointer group">
       <Link to={`/product/${id}`}>
@@ -17,18 +17,18 @@ const ProductItems = ({ id, name, price, image, sellerId }) => {
           />
         </div>
       </Link>
-      
+
       <div className="pt-3 pb-1">
         <Link to={`/product/${id}`}>
           <p className="text-sm hover:text-gray-900">{name}</p>
         </Link>
-        
+
         <div className="flex items-center justify-between mt-1">
           <p className="text-sm font-medium">
             {currency}
             {price}
           </p>
-          
+
           {sellerId && (
             <Link
               to={`/shop/${sellerId}`}

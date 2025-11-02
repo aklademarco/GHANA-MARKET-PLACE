@@ -110,9 +110,7 @@ const AdminDashboard = () => {
               <div className="bg-blue-100 p-3 rounded-lg">
                 <ShoppingBag className="text-blue-600" size={24} />
               </div>
-              <span className="text-blue-600 text-sm font-semibold">
-                +8.2%
-              </span>
+              <span className="text-blue-600 text-sm font-semibold">+8.2%</span>
             </div>
             <h3 className="text-gray-600 text-sm mb-1">Total Orders</h3>
             <p className="text-2xl font-bold text-gray-900">
@@ -203,7 +201,10 @@ const AdminDashboard = () => {
             <h2 className="text-xl font-semibold mb-4">Alerts</h2>
             <div className="space-y-4">
               <div className="flex items-start gap-3 p-3 bg-yellow-50 rounded-lg">
-                <AlertCircle className="text-yellow-600 flex-shrink-0" size={20} />
+                <AlertCircle
+                  className="text-yellow-600 flex-shrink-0"
+                  size={20}
+                />
                 <div>
                   <p className="text-sm font-semibold text-yellow-900">
                     {stats.pendingOrders} Pending Orders
@@ -269,7 +270,10 @@ const AdminDashboard = () => {
               </thead>
               <tbody>
                 {recentOrders.map((order) => (
-                  <tr key={order.id} className="border-b border-gray-100 hover:bg-gray-50">
+                  <tr
+                    key={order.id}
+                    className="border-b border-gray-100 hover:bg-gray-50"
+                  >
                     <td className="py-3 px-4 font-medium">{order.id}</td>
                     <td className="py-3 px-4">{order.customer}</td>
                     <td className="py-3 px-4">

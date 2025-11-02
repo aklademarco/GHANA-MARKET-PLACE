@@ -33,11 +33,11 @@ const App = () => {
         <Route path="/orders" element={<Orders />} />
         <Route path="/place-order" element={<PlaceOrder />} />
         <Route path="/product/:productId" element={<Product />} />
-        
+
         {/* Admin Routes */}
         <Route path="/admin" element={<AdminDashboard />} />
         <Route path="/admin/dashboard" element={<AdminDashboard />} />
-        
+
         {/* Seller Routes */}
         <Route path="/seller" element={<SellerDashboard />} />
         <Route path="/seller/dashboard" element={<SellerDashboard />} />

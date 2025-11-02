@@ -59,7 +59,9 @@ const SellerShop = () => {
                       </span>
                     )}
                   </div>
-                  <p className="text-gray-600 max-w-2xl">{seller.description}</p>
+                  <p className="text-gray-600 max-w-2xl">
+                    {seller.description}
+                  </p>
                 </div>
               </div>
 
@@ -67,8 +69,14 @@ const SellerShop = () => {
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
                 <div className="bg-gray-50 p-3 rounded-lg">
                   <div className="flex items-center gap-2 mb-1">
-                    <Star className="text-yellow-500" size={18} fill="currentColor" />
-                    <span className="font-semibold text-lg">{seller.rating}</span>
+                    <Star
+                      className="text-yellow-500"
+                      size={18}
+                      fill="currentColor"
+                    />
+                    <span className="font-semibold text-lg">
+                      {seller.rating}
+                    </span>
                   </div>
                   <p className="text-xs text-gray-600">
                     {seller.totalReviews} Reviews
@@ -87,7 +95,9 @@ const SellerShop = () => {
                   <p className="text-xs text-gray-600">Products</p>
                 </div>
                 <div className="bg-gray-50 p-3 rounded-lg">
-                  <p className="font-semibold text-lg mb-1">{seller.memberSince}</p>
+                  <p className="font-semibold text-lg mb-1">
+                    {seller.memberSince}
+                  </p>
                   <p className="text-xs text-gray-600">Member Since</p>
                 </div>
               </div>
@@ -115,7 +125,9 @@ const SellerShop = () => {
       {/* Shop Products */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="mb-8">
-          <h2 className="text-2xl font-bold text-gray-900 mb-2">Shop Products</h2>
+          <h2 className="text-2xl font-bold text-gray-900 mb-2">
+            Shop Products
+          </h2>
           <p className="text-gray-600">
             Browse authentic handcrafted items from {seller.name}
           </p>
@@ -145,21 +157,24 @@ const SellerShop = () => {
       {/* About Section */}
       <div className="bg-white border-t">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">About This Shop</h2>
+          <h2 className="text-2xl font-bold text-gray-900 mb-4">
+            About This Shop
+          </h2>
           <div className="prose max-w-none">
             <p className="text-gray-600 leading-relaxed">
               {seller.description}
             </p>
             <p className="text-gray-600 leading-relaxed mt-4">
-              We take pride in our traditional craftsmanship and authentic Ghanaian
-              artistry. Each piece is carefully handcrafted using techniques passed
-              down through generations. We source our materials locally and work
-              directly with skilled artisans to bring you the finest quality products.
+              We take pride in our traditional craftsmanship and authentic
+              Ghanaian artistry. Each piece is carefully handcrafted using
+              techniques passed down through generations. We source our
+              materials locally and work directly with skilled artisans to bring
+              you the finest quality products.
             </p>
             <p className="text-gray-600 leading-relaxed mt-4">
-              Customer satisfaction is our top priority. We ensure that every item
-              meets our high standards of quality before it reaches you. Thank you for
-              supporting local Ghanaian craftsmanship!
+              Customer satisfaction is our top priority. We ensure that every
+              item meets our high standards of quality before it reaches you.
+              Thank you for supporting local Ghanaian craftsmanship!
             </p>
           </div>
         </div>
