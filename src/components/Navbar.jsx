@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { assets } from "../assets/assets";
-import { NavLink, Link } from "react-router-dom";
-import { Smile, Search, ShoppingCart, Menu, X } from "lucide-react";
+import { NavLink, Link, useNavigate } from "react-router-dom";
+import { Smile, Search, ShoppingCart, Menu, X, User, Package, LogOut } from "lucide-react";
 import { useStore } from "../context/store";
 import { useCartStore } from "../context/cartStore";
 
@@ -9,6 +9,8 @@ const Navbar = () => {
   const setShowSearch = useStore((s) => s.setShowSearch);
   const cartItems = useCartStore((s) => s.cartItems);
   const [visible, setVisible] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false); // This should come from your auth context/store
+  const navigate = useNavigate();
 
   // Calculate cart count from cartItems
   const cartCount = Object.values(cartItems).reduce((total, sizes) => {
@@ -43,19 +45,49 @@ const Navbar = () => {
       <div className="flex items-center gap-6">
         <Search
           onClick={() => setShowSearch(true)}
-          className="text-gray-500 cursor-pointer"
+          className="text-gray-500 cursor-pointer hover:text-gray-700 transition"
           size={24}
         />
 
         <div className="group relative">
-          <Smile className="text-gray-500 cursor-pointer" size={24} />
-          <div className=" group-hover:block hidden absolute dropdown-men right-0 pt-4">
-            <div className="flex flex-col gap-2 w-36 py-3 px-5 bg-slate-100 text-gray-500 rounded">
-              <p className="cursor-pointer hover:text-black">My Profile</p>
-              <p className="cursor-pointer hover:text-black">Orders</p>
-              <p className="cursor-pointer hover:text-black">Logout</p>
-            </div>
-          </div>
+          {isLoggedIn ? (
+            <>
+              <User className="text-gray-500 cursor-pointer hover:text-gray-700 transition" size={24} />
+              <div className="group-hover:block hidden absolute dropdown-menu right-0 pt-4 z-50">
+                <div className="flex flex-col gap-2 w-48 py-3 px-2 bg-white text-gray-700 rounded-lg shadow-lg border border-gray-200">
+                  <Link
+                    to="/profile"
+                    className="flex items-center gap-3 px-3 py-2 cursor-pointer hover:bg-gray-100 rounded transition"
+                  >
+                    <User size={18} />
+                    <span>My Profile</span>
+                  </Link>
+                  <Link
+                    to="/orders"
+                    className="flex items-center gap-3 px-3 py-2 cursor-pointer hover:bg-gray-100 rounded transition"
+                  >
+                    <Package size={18} />
+                    <span>Orders</span>
+                  </Link>
+                  <hr className="my-1" />
+                  <button
+                    onClick={() => {
+                      setIsLoggedIn(false);
+                      navigate("/");
+                    }}
+                    className="flex items-center gap-3 px-3 py-2 cursor-pointer hover:bg-red-50 hover:text-red-600 rounded transition text-left w-full"
+                  >
+                    <LogOut size={18} />
+                    <span>Logout</span>
+                  </button>
+                </div>
+              </div>
+            </>
+          ) : (
+            <Link to="/login">
+              <Smile className="text-gray-500 cursor-pointer hover:text-gray-700 transition" size={24} />
+            </Link>
+          )}
         </div>
         <Link to="/cart" className="relative">
           <ShoppingCart className="text-gray-500" size={24} />
@@ -111,6 +143,38 @@ const Navbar = () => {
             >
               CONTACT
             </NavLink>
+            
+            <hr className="my-2" />
+            
+            {isLoggedIn ? (
+              <>
+                <NavLink
+                  onClick={() => setVisible(false)}
+                  className="py-2 pl-6"
+                  to="/orders"
+                >
+                  MY ORDERS
+                </NavLink>
+                <button
+                  onClick={() => {
+                    setIsLoggedIn(false);
+                    setVisible(false);
+                    navigate("/");
+                  }}
+                  className="py-2 pl-6 text-left text-red-600 hover:text-red-700"
+                >
+                  LOGOUT
+                </button>
+              </>
+            ) : (
+              <NavLink
+                onClick={() => setVisible(false)}
+                className="py-2 pl-6"
+                to="/login"
+              >
+                LOGIN / SIGN UP
+              </NavLink>
+            )}
           </div>
         </div>
       </div>
