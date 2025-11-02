@@ -13,7 +13,6 @@ import Necklace from "./images/necklace.webp";
 import WalkingStick from "./images/walking.webp";
 import LadiesFuguSmock from "./images/ladies_fugu_smock.webp";
 
-
 export const assets = {
   logo,
   Hero,
