@@ -10,6 +10,8 @@ import {
   User,
   Package,
   LogOut,
+  ShieldCheck,
+  Store,
 } from "lucide-react";
 import { useStore } from "../context/store";
 import { useCartStore } from "../context/cartStore";
@@ -80,6 +82,21 @@ const Navbar = () => {
                   >
                     <Package size={18} />
                     <span>Orders</span>
+                  </Link>
+                  <hr className="my-1" />
+                  <Link
+                    to="/admin/dashboard"
+                    className="flex items-center gap-3 px-3 py-2 cursor-pointer hover:bg-blue-50 hover:text-blue-600 rounded transition"
+                  >
+                    <ShieldCheck size={18} />
+                    <span>Admin Panel</span>
+                  </Link>
+                  <Link
+                    to="/seller/dashboard"
+                    className="flex items-center gap-3 px-3 py-2 cursor-pointer hover:bg-green-50 hover:text-green-600 rounded transition"
+                  >
+                    <Store size={18} />
+                    <span>Seller Dashboard</span>
                   </Link>
                   <hr className="my-1" />
                   <button
@@ -169,6 +186,20 @@ const Navbar = () => {
                   to="/orders"
                 >
                   MY ORDERS
+                </NavLink>
+                <NavLink
+                  onClick={() => setVisible(false)}
+                  className="py-2 pl-6"
+                  to="/admin/dashboard"
+                >
+                  ADMIN PANEL
+                </NavLink>
+                <NavLink
+                  onClick={() => setVisible(false)}
+                  className="py-2 pl-6"
+                  to="/seller/dashboard"
+                >
+                  SELLER DASHBOARD
                 </NavLink>
                 <button
                   onClick={() => {

@@ -11,6 +11,9 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import Collections from "./pages/Collections";
 import SearchBar from "./components/SearchBar";
+import AdminDashboard from "./pages/admin/AdminDashboard";
+import SellerDashboard from "./pages/seller/SellerDashboard";
+import SellerShop from "./pages/SellerShop";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -30,6 +33,15 @@ const App = () => {
         <Route path="/orders" element={<Orders />} />
         <Route path="/place-order" element={<PlaceOrder />} />
         <Route path="/product/:productId" element={<Product />} />
+        
+        {/* Admin Routes */}
+        <Route path="/admin" element={<AdminDashboard />} />
+        <Route path="/admin/dashboard" element={<AdminDashboard />} />
+        
+        {/* Seller Routes */}
+        <Route path="/seller" element={<SellerDashboard />} />
+        <Route path="/seller/dashboard" element={<SellerDashboard />} />
+        <Route path="/shop/:sellerId" element={<SellerShop />} />
       </Routes>
       <Footer />
     </div>

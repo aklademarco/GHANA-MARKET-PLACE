@@ -46,6 +46,7 @@ export const products = [
     bestSeller: false,
     inStock: true,
     rating: 2,
+    sellerId: "1",
   },
   {
     id: "0002",
@@ -61,6 +62,7 @@ export const products = [
     bestSeller: true,
     inStock: true,
     rating: 4,
+    sellerId: "2",
   },
   {
     id: "0003",
@@ -76,6 +78,7 @@ export const products = [
     bestSeller: true,
     inStock: true,
     rating: 2,
+    sellerId: "1",
   },
   {
     id: "0004",
@@ -91,6 +94,7 @@ export const products = [
     bestSeller: false,
     inStock: true,
     rating: 3,
+    sellerId: "3",
   },
   {
     id: "0005",
@@ -106,6 +110,7 @@ export const products = [
     bestSeller: true,
     inStock: false,
     rating: 2,
+    sellerId: "3",
   },
   {
     id: "0006",
@@ -121,6 +126,7 @@ export const products = [
     bestSeller: true,
     inStock: true,
     rating: 1,
+    sellerId: "1",
   },
   {
     id: "0007",
@@ -136,6 +142,7 @@ export const products = [
     bestSeller: false,
     inStock: true,
     rating: 5,
+    sellerId: "2",
   },
   {
     id: "0008",
@@ -151,6 +158,7 @@ export const products = [
     bestSeller: true,
     inStock: false,
     rating: 3.5,
+    sellerId: "2",
   },
   {
     id: "0009",
@@ -166,6 +174,7 @@ export const products = [
     bestSeller: false,
     inStock: true,
     rating: 2,
+    sellerId: "4",
   },
   {
     id: "0010",
@@ -181,6 +190,7 @@ export const products = [
     bestSeller: true,
     inStock: true,
     rating: 2,
+    sellerId: "4",
   },
   {
     id: "0011",
@@ -196,6 +206,7 @@ export const products = [
     bestSeller: false,
     inStock: true,
     rating: 3,
+    sellerId: "3",
   },
   {
     id: "0012",
@@ -211,5 +222,6 @@ export const products = [
     bestSeller: true,
     inStock: false,
     rating: 2,
+    sellerId: "4",
   },
 ];
