@@ -11,6 +11,9 @@ const PlaceOrder = () => {
   const { cartItems, getCartAmount, clearCart } = useCartStore();
   const navigate = useNavigate();
 
+  const [isGuest, setIsGuest] = useState(true);
+  const [showLoginOption, setShowLoginOption] = useState(true);
+
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -62,176 +65,229 @@ const PlaceOrder = () => {
   };
 
   return (
-    <div className="flex flex-col sm:flex-row justify-between gap-4 pt-5 sm:pt-14 min-h-[80vh] border-t">
-      {/* Left Side - Delivery Information */}
-      <div className="flex flex-col gap-4 w-full sm:max-w-[480px]">
-        <div className="text-xl sm:text-2xl my-3">
-          <Title text1={"DELIVERY"} text2={"INFORMATION"} />
-        </div>
-        <form onSubmit={handleSubmit}>
-          <div className="flex gap-3">
-            <input
-              type="text"
-              name="firstName"
-              value={formData.firstName}
-              onChange={handleChange}
-              placeholder="First name"
-              className="border border-gray-300 rounded py-1.5 px-3.5 w-full"
-              required
-            />
-            <input
-              type="text"
-              name="lastName"
-              value={formData.lastName}
-              onChange={handleChange}
-              placeholder="Last name"
-              className="border border-gray-300 rounded py-1.5 px-3.5 w-full"
-              required
-            />
-          </div>
-          <input
-            type="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            placeholder="Email address"
-            className="border border-gray-300 rounded py-1.5 px-3.5 w-full mt-3"
-            required
-          />
-          <input
-            type="text"
-            name="street"
-            value={formData.street}
-            onChange={handleChange}
-            placeholder="Street"
-            className="border border-gray-300 rounded py-1.5 px-3.5 w-full mt-3"
-            required
-          />
-          <div className="flex gap-3 mt-3">
-            <input
-              type="text"
-              name="city"
-              value={formData.city}
-              onChange={handleChange}
-              placeholder="City"
-              className="border border-gray-300 rounded py-1.5 px-3.5 w-full"
-              required
-            />
-            <input
-              type="text"
-              name="state"
-              value={formData.state}
-              onChange={handleChange}
-              placeholder="State"
-              className="border border-gray-300 rounded py-1.5 px-3.5 w-full"
-            />
-          </div>
-          <div className="flex gap-3 mt-3">
-            <input
-              type="text"
-              name="zipcode"
-              value={formData.zipcode}
-              onChange={handleChange}
-              placeholder="Zipcode"
-              className="border border-gray-300 rounded py-1.5 px-3.5 w-full"
-            />
-            <input
-              type="text"
-              name="country"
-              value={formData.country}
-              onChange={handleChange}
-              placeholder="Country"
-              className="border border-gray-300 rounded py-1.5 px-3.5 w-full"
-            />
-          </div>
-          <input
-            type="tel"
-            name="phone"
-            value={formData.phone}
-            onChange={handleChange}
-            placeholder="Phone"
-            className="border border-gray-300 rounded py-1.5 px-3.5 w-full mt-3"
-            required
-          />
-        </form>
-      </div>
-
-      {/* Right Side - Cart Totals & Payment */}
-      <div className="mt-8 w-full sm:max-w-[450px]">
-        <div className="mt-8 min-w-80">
-          <Title text1={"CART"} text2={"TOTALS"} />
-        </div>
-
-        <div className="flex flex-col gap-2 mt-2 text-sm">
-          <div className="flex justify-between">
-            <p>Subtotal</p>
-            <p>
-              {currency}
-              {subtotal.toFixed(2)}
-            </p>
-          </div>
-          <hr />
-          <div className="flex justify-between">
-            <p>Shipping Fee</p>
-            <p>
-              {currency}
-              {deliveryFee.toFixed(2)}
-            </p>
-          </div>
-          <hr />
-          <div className="flex justify-between font-bold">
-            <p>Total</p>
-            <p>
-              {currency}
-              {total.toFixed(2)}
-            </p>
-          </div>
-        </div>
-
-        {/* Payment Method Selection */}
-        <div className="mt-12">
-          <Title text1={"PAYMENT"} text2={"METHOD"} />
-          <div className="flex gap-3 flex-col lg:flex-row mt-5">
-            <div
-              onClick={() => setPaymentMethod("momo")}
-              className={`flex items-center gap-3 border p-2 px-3 cursor-pointer ${
-                paymentMethod === "momo" ? "border-green-400 bg-green-50" : ""
-              }`}
-            >
-              <p
-                className={`min-w-3.5 h-3.5 border rounded-full ${
-                  paymentMethod === "momo" ? "bg-green-400" : ""
-                }`}
-              ></p>
-              <p className="text-gray-500 text-sm font-medium mx-4">MOMO</p>
+    <div className="flex flex-col gap-6 pt-5 sm:pt-14 min-h-[80vh] border-t">
+      {/* Login or Guest Choice */}
+      {showLoginOption && (
+        <div className="max-w-4xl mx-auto w-full">
+          <div className="bg-gray-50 border border-gray-200 rounded-lg p-6">
+            <h2 className="text-xl font-semibold mb-4 text-center">
+              How would you like to checkout?
+            </h2>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <button
+                onClick={() => {
+                  navigate("/login", { state: { from: "/place-order" } });
+                }}
+                className="flex-1 sm:flex-none bg-black text-white px-8 py-3 rounded-lg hover:bg-gray-800 transition font-medium"
+              >
+                Sign In
+              </button>
+              <button
+                onClick={() => {
+                  setIsGuest(true);
+                  setShowLoginOption(false);
+                }}
+                className="flex-1 sm:flex-none bg-white text-black border-2 border-black px-8 py-3 rounded-lg hover:bg-gray-50 transition font-medium"
+              >
+                Continue as Guest
+              </button>
             </div>
-            <div
-              onClick={() => setPaymentMethod("cod")}
-              className={`flex items-center gap-3 border p-2 px-3 cursor-pointer ${
-                paymentMethod === "cod" ? "border-green-400 bg-green-50" : ""
-              }`}
-            >
-              <p
-                className={`min-w-3.5 h-3.5 border rounded-full ${
-                  paymentMethod === "cod" ? "bg-green-400" : ""
-                }`}
-              ></p>
-              <p className="text-gray-500 text-sm font-medium mx-4">
-                CASH ON DELIVERY
-              </p>
+            <p className="text-sm text-gray-600 text-center mt-4">
+              Already have an account? Sign in for faster checkout and order
+              tracking.
+            </p>
+          </div>
+        </div>
+      )}
+
+      {/* Checkout Form - Only show when user has made a choice */}
+      {!showLoginOption && (
+        <div className="flex flex-col sm:flex-row justify-between gap-4">
+          {/* Left Side - Delivery Information */}
+          <div className="flex flex-col gap-4 w-full sm:max-w-[480px]">
+            <div className="flex items-center justify-between">
+              <div className="text-xl sm:text-2xl my-3">
+                <Title text1={"DELIVERY"} text2={"INFORMATION"} />
+              </div>
+              {isGuest && (
+                <button
+                  onClick={() => setShowLoginOption(true)}
+                  className="text-sm text-blue-600 hover:text-blue-800 underline"
+                >
+                  Want to sign in?
+                </button>
+              )}
+            </div>
+            <form onSubmit={handleSubmit}>
+              <div className="flex gap-3">
+                <input
+                  type="text"
+                  name="firstName"
+                  value={formData.firstName}
+                  onChange={handleChange}
+                  placeholder="First name"
+                  className="border border-gray-300 rounded py-1.5 px-3.5 w-full"
+                  required
+                />
+                <input
+                  type="text"
+                  name="lastName"
+                  value={formData.lastName}
+                  onChange={handleChange}
+                  placeholder="Last name"
+                  className="border border-gray-300 rounded py-1.5 px-3.5 w-full"
+                  required
+                />
+              </div>
+              <input
+                type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                placeholder="Email address"
+                className="border border-gray-300 rounded py-1.5 px-3.5 w-full mt-3"
+                required
+              />
+              <input
+                type="text"
+                name="street"
+                value={formData.street}
+                onChange={handleChange}
+                placeholder="Street"
+                className="border border-gray-300 rounded py-1.5 px-3.5 w-full mt-3"
+                required
+              />
+              <div className="flex gap-3 mt-3">
+                <input
+                  type="text"
+                  name="city"
+                  value={formData.city}
+                  onChange={handleChange}
+                  placeholder="City"
+                  className="border border-gray-300 rounded py-1.5 px-3.5 w-full"
+                  required
+                />
+                <input
+                  type="text"
+                  name="state"
+                  value={formData.state}
+                  onChange={handleChange}
+                  placeholder="State"
+                  className="border border-gray-300 rounded py-1.5 px-3.5 w-full"
+                />
+              </div>
+              <div className="flex gap-3 mt-3">
+                <input
+                  type="text"
+                  name="zipcode"
+                  value={formData.zipcode}
+                  onChange={handleChange}
+                  placeholder="Zipcode"
+                  className="border border-gray-300 rounded py-1.5 px-3.5 w-full"
+                />
+                <input
+                  type="text"
+                  name="country"
+                  value={formData.country}
+                  onChange={handleChange}
+                  placeholder="Country"
+                  className="border border-gray-300 rounded py-1.5 px-3.5 w-full"
+                />
+              </div>
+              <input
+                type="tel"
+                name="phone"
+                value={formData.phone}
+                onChange={handleChange}
+                placeholder="Phone"
+                className="border border-gray-300 rounded py-1.5 px-3.5 w-full mt-3"
+                required
+              />
+            </form>
+          </div>
+
+          {/* Right Side - Cart Totals & Payment */}
+          <div className="mt-8 w-full sm:max-w-[450px]">
+            <div className="mt-8 min-w-80">
+              <Title text1={"CART"} text2={"TOTALS"} />
+            </div>
+
+            <div className="flex flex-col gap-2 mt-2 text-sm">
+              <div className="flex justify-between">
+                <p>Subtotal</p>
+                <p>
+                  {currency}
+                  {subtotal.toFixed(2)}
+                </p>
+              </div>
+              <hr />
+              <div className="flex justify-between">
+                <p>Shipping Fee</p>
+                <p>
+                  {currency}
+                  {deliveryFee.toFixed(2)}
+                </p>
+              </div>
+              <hr />
+              <div className="flex justify-between font-bold">
+                <p>Total</p>
+                <p>
+                  {currency}
+                  {total.toFixed(2)}
+                </p>
+              </div>
+            </div>
+
+            {/* Payment Method Selection */}
+            <div className="mt-12">
+              <Title text1={"PAYMENT"} text2={"METHOD"} />
+              <div className="flex gap-3 flex-col lg:flex-row mt-5">
+                <div
+                  onClick={() => setPaymentMethod("momo")}
+                  className={`flex items-center gap-3 border p-2 px-3 cursor-pointer ${
+                    paymentMethod === "momo"
+                      ? "border-green-400 bg-green-50"
+                      : ""
+                  }`}
+                >
+                  <p
+                    className={`min-w-3.5 h-3.5 border rounded-full ${
+                      paymentMethod === "momo" ? "bg-green-400" : ""
+                    }`}
+                  ></p>
+                  <p className="text-gray-500 text-sm font-medium mx-4">MOMO</p>
+                </div>
+                <div
+                  onClick={() => setPaymentMethod("cod")}
+                  className={`flex items-center gap-3 border p-2 px-3 cursor-pointer ${
+                    paymentMethod === "cod"
+                      ? "border-green-400 bg-green-50"
+                      : ""
+                  }`}
+                >
+                  <p
+                    className={`min-w-3.5 h-3.5 border rounded-full ${
+                      paymentMethod === "cod" ? "bg-green-400" : ""
+                    }`}
+                  ></p>
+                  <p className="text-gray-500 text-sm font-medium mx-4">
+                    CASH ON DELIVERY
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div className="w-full text-end mt-8">
+              <button
+                onClick={handleSubmit}
+                className="bg-black text-white px-16 py-3 text-sm"
+              >
+                PLACE ORDER
+              </button>
             </div>
           </div>
         </div>
-
-        <div className="w-full text-end mt-8">
-          <button
-            onClick={handleSubmit}
-            className="bg-black text-white px-16 py-3 text-sm"
-          >
-            PLACE ORDER
-          </button>
-        </div>
-      </div>
+      )}
     </div>
   );
 };

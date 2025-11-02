@@ -5,7 +5,7 @@ import { useStore } from "../context/store";
 const Orders = () => {
   const currency = useStore((s) => s.Currency);
 
-  // Mock orders data - In a real app, this would come from your backend
+  //connect backend here to fetch real orders
   const orders = [
     {
       id: "ORD001",
