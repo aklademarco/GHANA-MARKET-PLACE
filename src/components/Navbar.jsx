@@ -1,7 +1,16 @@
 import React, { useState } from "react";
 import { assets } from "../assets/assets";
 import { NavLink, Link, useNavigate } from "react-router-dom";
-import { Smile, Search, ShoppingCart, Menu, X, User, Package, LogOut } from "lucide-react";
+import {
+  Smile,
+  Search,
+  ShoppingCart,
+  Menu,
+  X,
+  User,
+  Package,
+  LogOut,
+} from "lucide-react";
 import { useStore } from "../context/store";
 import { useCartStore } from "../context/cartStore";
 
@@ -52,7 +61,10 @@ const Navbar = () => {
         <div className="group relative">
           {isLoggedIn ? (
             <>
-              <User className="text-gray-500 cursor-pointer hover:text-gray-700 transition" size={24} />
+              <User
+                className="text-gray-500 cursor-pointer hover:text-gray-700 transition"
+                size={24}
+              />
               <div className="group-hover:block hidden absolute dropdown-menu right-0 pt-4 z-50">
                 <div className="flex flex-col gap-2 w-48 py-3 px-2 bg-white text-gray-700 rounded-lg shadow-lg border border-gray-200">
                   <Link
@@ -85,7 +97,10 @@ const Navbar = () => {
             </>
           ) : (
             <Link to="/login">
-              <Smile className="text-gray-500 cursor-pointer hover:text-gray-700 transition" size={24} />
+              <Smile
+                className="text-gray-500 cursor-pointer hover:text-gray-700 transition"
+                size={24}
+              />
             </Link>
           )}
         </div>
@@ -143,9 +158,9 @@ const Navbar = () => {
             >
               CONTACT
             </NavLink>
-            
+
             <hr className="my-2" />
-            
+
             {isLoggedIn ? (
               <>
                 <NavLink
