@@ -13,6 +13,8 @@ import Collections from "./pages/Collections";
 import SearchBar from "./components/SearchBar";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import SellerDashboard from "./pages/seller/SellerDashboard";
+import SellerProfile from "./pages/seller/SellerProfile";
+import AddProduct from "./pages/seller/AddProduct";
 import SellerShop from "./pages/SellerShop";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -41,6 +43,8 @@ const App = () => {
         {/* Seller Routes */}
         <Route path="/seller" element={<SellerDashboard />} />
         <Route path="/seller/dashboard" element={<SellerDashboard />} />
+        <Route path="/seller/profile" element={<SellerProfile />} />
+        <Route path="/seller/products/new" element={<AddProduct />} />
         <Route path="/shop/:sellerId" element={<SellerShop />} />
       </Routes>
       <Footer />

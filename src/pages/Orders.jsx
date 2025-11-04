@@ -15,7 +15,7 @@ const Orders = () => {
         setLoading(true);
         const token = localStorage.getItem("token"); // Get auth token
 
-        const response = await fetch("http://localhost:5000/api/v1/order", {
+        const response = await fetch("http://localhost:3000/api/v1/orders", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",

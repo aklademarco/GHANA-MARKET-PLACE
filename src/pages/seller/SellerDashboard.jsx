@@ -9,8 +9,12 @@ import {
   Eye,
   Edit,
   Trash2,
+  Wallet,
+  ArrowUpRight,
+  Settings,
 } from "lucide-react";
 import { useStore } from "../../context/store";
+import { toast } from "react-toastify";
 
 const SellerDashboard = () => {
   const products = useStore((s) => s.products);
@@ -19,13 +23,35 @@ const SellerDashboard = () => {
   // Mock seller data - In production, filter by seller ID
   const [sellerStats] = useState({
     totalSales: 12450,
+    availableBalance: 8200,
+    pendingBalance: 3150,
+    totalWithdrawn: 1100,
     totalOrders: 87,
     totalProducts: 8,
     pendingOrders: 5,
   });
 
+  const [showWithdrawModal, setShowWithdrawModal] = useState(false);
+  const [withdrawAmount, setWithdrawAmount] = useState("");
+
   // Filter products for this seller (mock - would use seller ID)
   const sellerProducts = products.slice(0, 5);
+
+  const handleWithdraw = () => {
+    const amount = parseFloat(withdrawAmount);
+    if (!amount || amount <= 0) {
+      toast.error("Please enter a valid amount");
+      return;
+    }
+    if (amount > sellerStats.availableBalance) {
+      toast.error("Insufficient balance");
+      return;
+    }
+    // Process withdrawal
+    toast.success(`Withdrawal request of ${currency}${amount} submitted successfully!`);
+    setShowWithdrawModal(false);
+    setWithdrawAmount("");
+  };
 
   return (
     <div className="min-h-screen bg-gray-50 p-6">
@@ -38,34 +64,75 @@ const SellerDashboard = () => {
             </h1>
             <p className="text-gray-600">Manage your shop and products</p>
           </div>
-          <Link
-            to="/seller/products/new"
-            className="bg-black text-white px-6 py-3 rounded-lg hover:bg-gray-800 transition flex items-center gap-2"
-          >
-            <Plus size={20} />
-            Add Product
-          </Link>
+          <div className="flex items-center gap-3">
+            <Link
+              to="/seller/profile"
+              className="bg-white border border-gray-300 text-gray-700 px-6 py-3 rounded-lg hover:bg-gray-50 transition flex items-center gap-2"
+            >
+              <Settings size={20} />
+              Profile Settings
+            </Link>
+            <Link
+              to="/seller/products/new"
+              className="bg-black text-white px-6 py-3 rounded-lg hover:bg-gray-800 transition flex items-center gap-2"
+            >
+              <Plus size={20} />
+              Add Product
+            </Link>
+          </div>
+        </div>
+
+        {/* Financial Overview Card */}
+        <div className="bg-gray-600 rounded-lg shadow-lg p-6 mb-8 text-white">
+          <div className="flex items-center justify-between mb-6">
+            <div className="flex items-center gap-3">
+              <div className="bg-white/20 p-3 rounded-lg">
+                <Wallet size={28} />
+              </div>
+              <div>
+                <h2 className="text-lg font-semibold opacity-90">Total Earnings</h2>
+                <p className="text-3xl font-bold">
+                  {currency}
+                  {sellerStats.totalSales.toLocaleString()}
+                </p>
+              </div>
+            </div>
+            <button
+              onClick={() => setShowWithdrawModal(true)}
+              className="bg-white text-gray-600 px-6 py-3 rounded-lg hover:bg-gray-100 transition flex items-center gap-2 font-semibold"
+            >
+              <ArrowUpRight size={20} />
+              Withdraw
+            </button>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 border-t border-white/20 pt-4">
+            <div>
+              <p className="text-sm opacity-80 mb-1">Available Balance</p>
+              <p className="text-xl font-bold">
+                {currency}
+                {sellerStats.availableBalance.toLocaleString()}
+              </p>
+            </div>
+            <div>
+              <p className="text-sm opacity-80 mb-1">Pending Balance</p>
+              <p className="text-xl font-bold">
+                {currency}
+                {sellerStats.pendingBalance.toLocaleString()}
+              </p>
+            </div>
+            <div>
+              <p className="text-sm opacity-80 mb-1">Total Withdrawn</p>
+              <p className="text-xl font-bold">
+                {currency}
+                {sellerStats.totalWithdrawn.toLocaleString()}
+              </p>
+            </div>
+          </div>
         </div>
 
         {/* Stats Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-          {/* Total Sales */}
-          <div className="bg-white rounded-lg shadow p-6">
-            <div className="flex items-center justify-between mb-4">
-              <div className="bg-green-100 p-3 rounded-lg">
-                <DollarSign className="text-green-600" size={24} />
-              </div>
-              <span className="text-green-600 text-sm font-semibold">
-                +12.5%
-              </span>
-            </div>
-            <h3 className="text-gray-600 text-sm mb-1">Total Sales</h3>
-            <p className="text-2xl font-bold text-gray-900">
-              {currency}
-              {sellerStats.totalSales.toLocaleString()}
-            </p>
-          </div>
-
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
           {/* Total Orders */}
           <div className="bg-white rounded-lg shadow p-6">
             <div className="flex items-center justify-between mb-4">
@@ -168,7 +235,7 @@ const SellerDashboard = () => {
                       <span
                         className={`px-3 py-1 rounded-full text-xs font-medium ${
                           product.inStock
-                            ? "bg-green-100 text-green-800"
+                            ? "bg-green-100 text-gray-600"
                             : "bg-red-100 text-red-800"
                         }`}
                       >
@@ -218,6 +285,66 @@ const SellerDashboard = () => {
           </div>
         </div>
       </div>
+
+      {/* Withdraw Modal */}
+      {showWithdrawModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-lg max-w-md w-full p-6">
+            <h3 className="text-xl font-bold mb-4">Withdraw Funds</h3>
+            
+            <div className="mb-4">
+              <p className="text-sm text-gray-600 mb-2">Available Balance</p>
+              <p className="text-2xl font-bold text-gray-600">
+                {currency}
+                {sellerStats.availableBalance.toLocaleString()}
+              </p>
+            </div>
+
+            <div className="mb-4">
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Withdrawal Amount <span className="text-red-500">*</span>
+              </label>
+              <div className="relative">
+                <span className="absolute left-3 top-3 text-gray-500">
+                  {currency}
+                </span>
+                <input
+                  type="number"
+                  value={withdrawAmount}
+                  onChange={(e) => setWithdrawAmount(e.target.value)}
+                  placeholder="0.00"
+                  className="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-500"
+                />
+              </div>
+            </div>
+
+            <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-4">
+              <p className="text-sm text-blue-800">
+                <strong>Note:</strong> Withdrawal requests are processed within 1-3 business days. 
+                Funds will be transferred to your registered payment method.
+              </p>
+            </div>
+
+            <div className="flex gap-3">
+              <button
+                onClick={() => {
+                  setShowWithdrawModal(false);
+                  setWithdrawAmount("");
+                }}
+                className="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleWithdraw}
+                className="flex-1 px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-green-700 transition"
+              >
+                Confirm Withdrawal
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
