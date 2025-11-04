@@ -1,47 +1,90 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Title from "../components/Title";
 import { useStore } from "../context/store";
 
 const Orders = () => {
   const currency = useStore((s) => s.Currency);
+  const [orders, setOrders] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  //connect backend here to fetch real orders
-  const orders = [
-    {
-      id: "ORD001",
-      date: "2025-10-28",
-      status: "Delivered",
-      total: 450,
-      items: 3,
-    },
-    {
-      id: "ORD002",
-      date: "2025-10-25",
-      status: "In Transit",
-      total: 320,
-      items: 2,
-    },
-    {
-      id: "ORD003",
-      date: "2025-10-20",
-      status: "Processing",
-      total: 180,
-      items: 1,
-    },
-  ];
+  // Fetch orders from backend
+  useEffect(() => {
+    const fetchOrders = async () => {
+      try {
+        setLoading(true);
+        const token = localStorage.getItem("token"); // Get auth token
+
+        const response = await fetch("http://localhost:5000/api/v1/order", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch orders");
+        }
+
+        const result = await response.json();
+
+        if (result.success) {
+          setOrders(result.data);
+        }
+      } catch (err) {
+        console.error("Error fetching orders:", err);
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchOrders();
+  }, []);
 
   const getStatusColor = (status) => {
     switch (status) {
-      case "Delivered":
+      case "delivered":
         return "bg-green-100 text-green-800";
-      case "In Transit":
+      case "shipped":
         return "bg-blue-100 text-blue-800";
-      case "Processing":
+      case "processing":
         return "bg-yellow-100 text-yellow-800";
+      case "pending":
+        return "bg-orange-100 text-orange-800";
+      case "cancelled":
+        return "bg-red-100 text-red-800";
       default:
         return "bg-gray-100 text-gray-800";
     }
   };
+
+  const formatStatus = (status) => {
+    return status.charAt(0).toUpperCase() + status.slice(1);
+  };
+
+  if (loading) {
+    return (
+      <div className="border-t pt-16">
+        <div className="text-2xl mb-3">
+          <Title text1={"MY"} text2={"ORDERS"} />
+        </div>
+        <p className="text-center text-gray-500 mt-10">Loading orders...</p>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="border-t pt-16">
+        <div className="text-2xl mb-3">
+          <Title text1={"MY"} text2={"ORDERS"} />
+        </div>
+        <p className="text-center text-red-500 mt-10">Error: {error}</p>
+      </div>
+    );
+  }
 
   return (
     <div className="border-t pt-16">
@@ -70,14 +113,14 @@ const Orders = () => {
                           order.status
                         )}`}
                       >
-                        {order.status}
+                        {formatStatus(order.status)}
                       </span>
                     </div>
                     <p className="text-sm text-gray-600 mb-1">
-                      Date: {new Date(order.date).toLocaleDateString()}
+                      Date: {new Date(order.createdAt).toLocaleDateString()}
                     </p>
                     <p className="text-sm text-gray-600">
-                      Items: {order.items}
+                      Items: {order.items?.length || 0}
                     </p>
                   </div>
 
@@ -86,11 +129,11 @@ const Orders = () => {
                       <p className="text-sm text-gray-600 mb-1">Total</p>
                       <p className="text-xl font-semibold">
                         {currency}
-                        {order.total.toFixed(2)}
+                        {parseFloat(order.totalAmount).toFixed(2)}
                       </p>
                     </div>
                     <button className="bg-black text-white px-6 py-2 text-sm rounded hover:bg-gray-800 transition">
-                      Track Order
+                      View Details
                     </button>
                   </div>
                 </div>

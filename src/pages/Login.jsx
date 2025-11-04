@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
-import { Eye, EyeOff, Mail, Lock, User, Phone } from "lucide-react";
+import { Eye, EyeOff, Mail, Lock, User, Phone, ShoppingBag, Store, MapPin, FileText, CreditCard, Smartphone } from "lucide-react";
 
 const Login = () => {
   const [currentState, setCurrentState] = useState("Login");
@@ -15,6 +15,12 @@ const Login = () => {
     phone: "",
     password: "",
     confirmPassword: "",
+    role: "buyer", // Default role
+    // Seller-specific fields
+    storeName: "",
+    storeLocation: "",
+    storeDescription: "",
+    paymentMethod: "momo", // Default payment method
   });
 
   const handleChange = (e) => {
@@ -33,9 +39,17 @@ const Login = () => {
 
     if (currentState === "Sign Up") {
       // Sign Up validation
-      if (!formData.name || !formData.email || !formData.password) {
+      if (!formData.name || !formData.email || !formData.password || !formData.role) {
         toast.error("Please fill in all required fields");
         return;
+      }
+
+      // Seller-specific validation
+      if (formData.role === "seller") {
+        if (!formData.storeName || !formData.storeLocation || !formData.storeDescription) {
+          toast.error("Please fill in all store details");
+          return;
+        }
       }
 
       if (formData.password.length < 6) {
@@ -49,7 +63,8 @@ const Login = () => {
       }
 
       // Simulate sign up
-      toast.success("Account created successfully! Please log in.");
+      const roleMessage = formData.role === "seller" ? "as a Seller" : "as a Buyer";
+      toast.success(`Account created successfully ${roleMessage}! Please log in.`);
       setCurrentState("Login");
       setFormData({
         name: "",
@@ -57,6 +72,11 @@ const Login = () => {
         phone: "",
         password: "",
         confirmPassword: "",
+        role: "buyer",
+        storeName: "",
+        storeLocation: "",
+        storeDescription: "",
+        paymentMethod: "momo",
       });
     } else {
       // Login validation
@@ -173,6 +193,255 @@ const Login = () => {
                   />
                 </div>
               </div>
+            )}
+
+            {/* Role Selection - Only for Sign Up */}
+            {currentState === "Sign Up" && (
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-3">
+                  I want to <span className="text-red-500">*</span>
+                </label>
+                <div className="grid grid-cols-2 gap-4">
+                  {/* Buyer Option */}
+                  <label
+                    className={`relative flex flex-col items-center justify-center p-4 border-2 rounded-lg cursor-pointer transition-all ${
+                      formData.role === "buyer"
+                        ? "border-black bg-gray-50"
+                        : "border-gray-300 hover:border-gray-400"
+                    }`}
+                  >
+                    <input
+                      type="radio"
+                      name="role"
+                      value="buyer"
+                      checked={formData.role === "buyer"}
+                      onChange={handleChange}
+                      className="sr-only"
+                    />
+                    <ShoppingBag
+                      className={`h-8 w-8 mb-2 ${
+                        formData.role === "buyer"
+                          ? "text-black"
+                          : "text-gray-400"
+                      }`}
+                    />
+                    <span
+                      className={`text-sm font-medium ${
+                        formData.role === "buyer"
+                          ? "text-black"
+                          : "text-gray-600"
+                      }`}
+                    >
+                      Buy Products
+                    </span>
+                    <span className="text-xs text-gray-500 mt-1 text-center">
+                      Browse & purchase
+                    </span>
+                  </label>
+
+                  {/* Seller Option */}
+                  <label
+                    className={`relative flex flex-col items-center justify-center p-4 border-2 rounded-lg cursor-pointer transition-all ${
+                      formData.role === "seller"
+                        ? "border-black bg-gray-50"
+                        : "border-gray-300 hover:border-gray-400"
+                    }`}
+                  >
+                    <input
+                      type="radio"
+                      name="role"
+                      value="seller"
+                      checked={formData.role === "seller"}
+                      onChange={handleChange}
+                      className="sr-only"
+                    />
+                    <Store
+                      className={`h-8 w-8 mb-2 ${
+                        formData.role === "seller"
+                          ? "text-black"
+                          : "text-gray-400"
+                      }`}
+                    />
+                    <span
+                      className={`text-sm font-medium ${
+                        formData.role === "seller"
+                          ? "text-black"
+                          : "text-gray-600"
+                      }`}
+                    >
+                      Sell Products
+                    </span>
+                    <span className="text-xs text-gray-500 mt-1 text-center">
+                      List & manage items
+                    </span>
+                  </label>
+                </div>
+              </div>
+            )}
+
+            {/* Seller-Specific Fields - Only show when role is seller */}
+            {currentState === "Sign Up" && formData.role === "seller" && (
+              <>
+                {/* Store Name */}
+                <div>
+                  <label
+                    htmlFor="storeName"
+                    className="block text-sm font-medium text-gray-700 mb-2"
+                  >
+                    Store Name <span className="text-red-500">*</span>
+                  </label>
+                  <div className="relative">
+                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                      <Store className="h-5 w-5 text-gray-400" />
+                    </div>
+                    <input
+                      type="text"
+                      id="storeName"
+                      name="storeName"
+                      value={formData.storeName}
+                      onChange={handleChange}
+                      placeholder="Kofi's Kente Store"
+                      className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent"
+                      required={formData.role === "seller"}
+                    />
+                  </div>
+                </div>
+
+                {/* Store Location */}
+                <div>
+                  <label
+                    htmlFor="storeLocation"
+                    className="block text-sm font-medium text-gray-700 mb-2"
+                  >
+                    Store Location <span className="text-red-500">*</span>
+                  </label>
+                  <div className="relative">
+                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                      <MapPin className="h-5 w-5 text-gray-400" />
+                    </div>
+                    <input
+                      type="text"
+                      id="storeLocation"
+                      name="storeLocation"
+                      value={formData.storeLocation}
+                      onChange={handleChange}
+                      placeholder="Accra, Ghana"
+                      className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent"
+                      required={formData.role === "seller"}
+                    />
+                  </div>
+                </div>
+
+                {/* Store Description */}
+                <div>
+                  <label
+                    htmlFor="storeDescription"
+                    className="block text-sm font-medium text-gray-700 mb-2"
+                  >
+                    Store Description <span className="text-red-500">*</span>
+                  </label>
+                  <div className="relative">
+                    <div className="absolute top-3 left-3 pointer-events-none">
+                      <FileText className="h-5 w-5 text-gray-400" />
+                    </div>
+                    <textarea
+                      id="storeDescription"
+                      name="storeDescription"
+                      value={formData.storeDescription}
+                      onChange={handleChange}
+                      placeholder="Tell customers about your store and products..."
+                      rows="3"
+                      className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent resize-none"
+                      required={formData.role === "seller"}
+                    />
+                  </div>
+                  <p className="text-xs text-gray-500 mt-1">
+                    Describe what makes your store unique
+                  </p>
+                </div>
+
+                {/* Payment Method */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-3">
+                    Preferred Payment Method <span className="text-red-500">*</span>
+                  </label>
+                  <div className="grid grid-cols-2 gap-4">
+                    {/* Mobile Money Option */}
+                    <label
+                      className={`relative flex flex-col items-center justify-center p-4 border-2 rounded-lg cursor-pointer transition-all ${
+                        formData.paymentMethod === "momo"
+                          ? "border-black bg-gray-50"
+                          : "border-gray-300 hover:border-gray-400"
+                      }`}
+                    >
+                      <input
+                        type="radio"
+                        name="paymentMethod"
+                        value="momo"
+                        checked={formData.paymentMethod === "momo"}
+                        onChange={handleChange}
+                        className="sr-only"
+                      />
+                      <Smartphone
+                        className={`h-8 w-8 mb-2 ${
+                          formData.paymentMethod === "momo"
+                            ? "text-black"
+                            : "text-gray-400"
+                        }`}
+                      />
+                      <span
+                        className={`text-sm font-medium ${
+                          formData.paymentMethod === "momo"
+                            ? "text-black"
+                            : "text-gray-600"
+                        }`}
+                      >
+                        Mobile Money
+                      </span>
+                      <span className="text-xs text-gray-500 mt-1 text-center">
+                        MTN/Vodafone/AirtelTigo
+                      </span>
+                    </label>
+
+                    {/* Bank Transfer Option */}
+                    <label
+                      className={`relative flex flex-col items-center justify-center p-4 border-2 rounded-lg cursor-pointer transition-all ${
+                        formData.paymentMethod === "bank"
+                          ? "border-black bg-gray-50"
+                          : "border-gray-300 hover:border-gray-400"
+                      }`}
+                    >
+                      <input
+                        type="radio"
+                        name="paymentMethod"
+                        value="bank"
+                        checked={formData.paymentMethod === "bank"}
+                        onChange={handleChange}
+                        className="sr-only"
+                      />
+                      <CreditCard
+                        className={`h-8 w-8 mb-2 ${
+                          formData.paymentMethod === "bank"
+                            ? "text-black"
+                            : "text-gray-400"
+                        }`}
+                      />
+                      <span
+                        className={`text-sm font-medium ${
+                          formData.paymentMethod === "bank"
+                            ? "text-black"
+                            : "text-gray-600"
+                        }`}
+                      >
+                        Bank Transfer
+                      </span>
+                      <span className="text-xs text-gray-500 mt-1 text-center">
+                        Direct bank account
+                      </span>
+                    </label>
+                  </div>
+                </div>
+              </>
             )}
 
             {/* Password Field */}
@@ -327,6 +596,11 @@ const Login = () => {
                       phone: "",
                       password: "",
                       confirmPassword: "",
+                      role: "buyer",
+                      storeName: "",
+                      storeLocation: "",
+                      storeDescription: "",
+                      paymentMethod: "momo",
                     });
                   }}
                   className="font-medium text-black hover:text-gray-700 underline"
@@ -347,6 +621,11 @@ const Login = () => {
                       phone: "",
                       password: "",
                       confirmPassword: "",
+                      role: "buyer",
+                      storeName: "",
+                      storeLocation: "",
+                      storeDescription: "",
+                      paymentMethod: "momo",
                     });
                   }}
                   className="font-medium text-black hover:text-gray-700 underline"
