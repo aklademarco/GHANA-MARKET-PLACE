@@ -1,7 +1,20 @@
 import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
-import { Eye, EyeOff, Mail, Lock, User, Phone, ShoppingBag, Store, MapPin, FileText, CreditCard, Smartphone } from "lucide-react";
+import {
+  Eye,
+  EyeOff,
+  Mail,
+  Lock,
+  User,
+  Phone,
+  ShoppingBag,
+  Store,
+  MapPin,
+  FileText,
+  CreditCard,
+  Smartphone,
+} from "lucide-react";
 
 const Login = () => {
   const [currentState, setCurrentState] = useState("Login");
@@ -39,14 +52,23 @@ const Login = () => {
 
     if (currentState === "Sign Up") {
       // Sign Up validation
-      if (!formData.name || !formData.email || !formData.password || !formData.role) {
+      if (
+        !formData.name ||
+        !formData.email ||
+        !formData.password ||
+        !formData.role
+      ) {
         toast.error("Please fill in all required fields");
         return;
       }
 
       // Seller-specific validation
       if (formData.role === "seller") {
-        if (!formData.storeName || !formData.storeLocation || !formData.storeDescription) {
+        if (
+          !formData.storeName ||
+          !formData.storeLocation ||
+          !formData.storeDescription
+        ) {
           toast.error("Please fill in all store details");
           return;
         }
@@ -63,8 +85,11 @@ const Login = () => {
       }
 
       // Simulate sign up
-      const roleMessage = formData.role === "seller" ? "as a Seller" : "as a Buyer";
-      toast.success(`Account created successfully ${roleMessage}! Please log in.`);
+      const roleMessage =
+        formData.role === "seller" ? "as a Seller" : "as a Buyer";
+      toast.success(
+        `Account created successfully ${roleMessage}! Please log in.`
+      );
       setCurrentState("Login");
       setFormData({
         name: "",
@@ -363,7 +388,8 @@ const Login = () => {
                 {/* Payment Method */}
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-3">
-                    Preferred Payment Method <span className="text-red-500">*</span>
+                    Preferred Payment Method{" "}
+                    <span className="text-red-500">*</span>
                   </label>
                   <div className="grid grid-cols-2 gap-4">
                     {/* Mobile Money Option */}
