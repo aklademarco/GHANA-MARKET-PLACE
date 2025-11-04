@@ -1,13 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import {
-  ArrowLeft,
-  Upload,
-  X,
-  Plus,
-  Save,
-  Package,
-} from "lucide-react";
+import { ArrowLeft, Upload, X, Plus, Save, Package } from "lucide-react";
 import { toast } from "react-toastify";
 
 const AddProduct = () => {
@@ -119,7 +112,7 @@ const AddProduct = () => {
 
     console.log("New Product:", newProduct);
     toast.success("Product added successfully!");
-    
+
     // Navigate back to dashboard
     setTimeout(() => {
       navigate("/seller/dashboard");
