@@ -6,6 +6,7 @@ export const useStore = create((set, get) => ({
   Currency: "GH₵",
   delivery_fee: 10,
   search: "",
+  category: "",
   showSearch: false,
 
   // utility to get related products (non-mutating)
@@ -22,5 +23,6 @@ export const useStore = create((set, get) => ({
   },
 
   setSearch: (q) => set({ search: q }),
+  setCategory: (category) => set({ category }),
   setShowSearch: (v) => set({ showSearch: v }),
 }));

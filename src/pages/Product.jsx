@@ -18,6 +18,7 @@ const StarRating = ({ rating = 0, max = 5 }) => {
 const Product = () => {
   const { productId } = useParams();
   const [selectedSize, setSelectedSize] = React.useState("");
+  const [selectedColor, setSelectedColor] = React.useState("");
 
   const products = useStore((s) => s.products);
   const Currency = useStore((s) => s.Currency);
@@ -43,6 +44,15 @@ const Product = () => {
   if (!product) {
     return <div className="p-6">Product not found</div>;
   }
+
+  const sizeOptions = product.size?.length > 1 ? product.size : [];
+  const colorOptions = product.colors || [];
+  const chosenSize = selectedSize || sizeOptions[0] || "";
+  const chosenColor = selectedColor || colorOptions[0] || "";
+  const variant = [
+    chosenSize ? `Size: ${chosenSize}` : "",
+    chosenColor ? `Color: ${chosenColor}` : "",
+  ].filter(Boolean).join(" · ") || "Default";
 
   const images = Array.isArray(product.image)
     ? product.image
@@ -75,12 +85,12 @@ const Product = () => {
           <div className="space-y-4">
             {images.length > 0 ? (
               <>
-                <div className="aspect-square w-full overflow-hidden rounded-2xl bg-gray-50">
+                <div className="product-media-frame w-full rounded-2xl border border-slate-100">
                   <img
                     src={images[0]}
                     alt={product.name}
                     loading="lazy"
-                    className="w-full h-full object-cover"
+                    className="product-media-image p-5 sm:p-8"
                   />
                 </div>
                 {images.length > 1 && (
@@ -88,13 +98,13 @@ const Product = () => {
                     {images.slice(1, 5).map((src, i) => (
                       <div
                         key={i}
-                        className="aspect-square overflow-hidden rounded-lg bg-gray-50 border-2 border-transparent hover:border-gray-300 cursor-pointer transition"
+                        className="product-media-frame rounded-lg border-2 border-transparent hover:border-gray-300 cursor-pointer transition"
                       >
                         <img
                           src={src}
                           alt={`${product.name} ${i + 2}`}
                           loading="lazy"
-                          className="w-full h-full object-cover"
+                          className="product-media-thumb"
                         />
                       </div>
                     ))}
@@ -150,18 +160,18 @@ const Product = () => {
             </div>
 
             {/* Size Selection */}
-            {product.size && product.size.length > 0 && (
+            {sizeOptions.length > 0 && (
               <div className="border-t border-gray-200 pt-6">
                 <p className="text-sm font-medium text-gray-900 mb-3">
                   Select Size:
                 </p>
                 <div className="flex flex-wrap gap-2">
-                  {product.size.map((s) => (
+                  {sizeOptions.map((s) => (
                     <button
                       key={s}
                       onClick={() => setSelectedSize(s)}
                       className={`px-4 py-2 border rounded-lg text-sm font-medium transition ${
-                        selectedSize === s
+                        chosenSize === s
                           ? "bg-black text-white border-black"
                           : "bg-white text-gray-700 border-gray-300 hover:border-gray-400"
                       }`}
@@ -173,17 +183,37 @@ const Product = () => {
               </div>
             )}
 
+            {colorOptions.length > 0 && (
+              <div className="border-t border-gray-200 pt-6">
+                <p className="mb-3 text-sm font-medium text-gray-900">
+                  Color: <span className="text-slate-500">{chosenColor}</span>
+                </p>
+                <div className="flex flex-wrap gap-3">
+                  {colorOptions.map((color) => (
+                    <button
+                      key={color}
+                      type="button"
+                      onClick={() => setSelectedColor(color)}
+                      className={`rounded-xl border-2 px-4 py-2 text-sm font-bold transition ${
+                        chosenColor === color
+                          ? "border-[#0d8f62] bg-emerald-50 text-[#0d8f62]"
+                          : "border-slate-200 text-slate-600 hover:border-slate-300"
+                      }`}
+                    >
+                      {color}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+
             <div className="border-t border-gray-200 pt-6 space-y-4">
               <button
                 onClick={() => {
-                  console.log("Add to cart clicked", {
-                    productId: product.id,
-                    selectedSize,
-                  });
-                  addToCart(product.id, selectedSize);
+                  addToCart(product.id, variant);
                 }}
                 disabled={!product.inStock}
-                className="w-full bg-black hover:bg-gray-800 text-white font-medium py-4 px-8 rounded-lg transition disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-black"
+                className="w-full rounded-xl bg-[#0d8f62] px-8 py-4 font-bold text-white transition hover:bg-[#087653] disabled:cursor-not-allowed disabled:opacity-50"
               >
                 {product.inStock ? "Add to Cart" : "Out of Stock"}
               </button>
@@ -265,13 +295,13 @@ const Product = () => {
                     to={`/product/${p.id}`}
                     className="group block"
                   >
-                    <div className="aspect-square w-full overflow-hidden rounded-lg bg-gray-100 mb-3">
+                    <div className="product-media-frame w-full rounded-lg border border-slate-100 mb-3">
                       {thumb ? (
                         <img
                           src={thumb}
                           alt={p.name}
                           loading="lazy"
-                          className="w-full h-full object-cover group-hover:scale-105 transition duration-300"
+                          className="product-media-image group-hover:scale-[1.03] transition duration-300"
                         />
                       ) : (
                         <div className="w-full h-full flex items-center justify-center text-gray-400">

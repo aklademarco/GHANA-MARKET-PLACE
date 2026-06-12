@@ -159,12 +159,12 @@ const AddProduct = () => {
               {images.map((image, index) => (
                 <div
                   key={index}
-                  className="relative aspect-square border-2 border-gray-300 rounded-lg overflow-hidden group"
+                  className="product-media-frame relative border-2 border-gray-300 rounded-lg group"
                 >
                   <img
                     src={image.preview}
                     alt={`Product ${index + 1}`}
-                    className="w-full h-full object-cover"
+                    className="product-media-image"
                   />
                   <button
                     type="button"

@@ -7,12 +7,14 @@ export const useAuthStore = create(
       user: null,
       isLoggedIn: false,
       userRole: null, // 'admin', 'seller', 'customer'
+      accessToken: null,
 
-      login: (userData) =>
+      login: (userData, accessToken = null) =>
         set({
           user: userData,
           isLoggedIn: true,
           userRole: userData.role,
+          accessToken,
         }),
 
       logout: () =>
@@ -20,6 +22,7 @@ export const useAuthStore = create(
           user: null,
           isLoggedIn: false,
           userRole: null,
+          accessToken: null,
         }),
 
       updateUser: (userData) =>

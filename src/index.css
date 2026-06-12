@@ -1,35 +1,71 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap');
 @import "tailwindcss";
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
 
-a.active hr {
-    display: block;
+:root {
+  color: #172033;
+  background: #f7f9fc;
+  font-family: "DM Sans", sans-serif;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
 }
 
-h1,h2,h3,h4,h5,h6 {
-  font-family: "Playfair Display", serif;
-  font-optical-sizing: auto;
-  font-weight:bold;
-  font-style: normal;
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; min-width: 320px; min-height: 100vh; }
+h1, h2, h3, h4, h5, h6 { font-family: "Manrope", sans-serif; }
+button, a { -webkit-tap-highlight-color: transparent; }
+button { cursor: pointer; }
+
+.gmp-container {
+  width: min(1180px, calc(100% - 32px));
+  margin-inline: auto;
 }
 
-
-* {
-  font-family: "Merriweather", serif;
-  font-optical-sizing: auto;
-  font-style: normal;
-  font-variation-settings:
-    "wdth" 100;
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
 }
 
-body {
-  margin: 0;
-  padding: 0;
+.product-media-frame {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  background: #f8fafc;
 }
 
-@media (max-width:640px) {
-  a.active{
-    background-color: gold;
-    color: black;
-  }
+.product-media-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  padding: 0.75rem;
+}
+
+.product-media-thumb {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  padding: 0.25rem;
+}
+
+.checkout-input {
+  width: 100%;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.75rem;
+  padding: 0.75rem 1rem;
+  font-size: 0.875rem;
+  outline: none;
+  transition: border-color 150ms ease, box-shadow 150ms ease;
+}
+
+.checkout-input:focus {
+  border-color: #0d8f62;
+  box-shadow: 0 0 0 3px #d1fae5;
+}
+
+@media (min-width: 640px) {
+  .gmp-container { width: min(1180px, calc(100% - 64px)); }
 }

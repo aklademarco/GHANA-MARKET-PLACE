@@ -8,18 +8,15 @@ export const useCartStore = create(
     (set, get) => ({
       cartItems: {},
 
-      addToCart: (itemId, size) => {
-        if (!size) {
-          toast.error("Select product size");
-          return;
-        }
+      addToCart: (itemId, variant = "Default") => {
+        const variantKey = variant || "Default";
 
         const cartData = structuredClone(get().cartItems);
 
         if (cartData[itemId]) {
-          cartData[itemId][size] = (cartData[itemId][size] || 0) + 1;
+          cartData[itemId][variantKey] = (cartData[itemId][variantKey] || 0) + 1;
         } else {
-          cartData[itemId] = { [size]: 1 };
+          cartData[itemId] = { [variantKey]: 1 };
         }
 
         set({ cartItems: cartData });

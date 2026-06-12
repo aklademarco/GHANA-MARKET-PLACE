@@ -15,12 +15,14 @@ import {
   CreditCard,
   Smartphone,
 } from "lucide-react";
+import { useAuthStore } from "../context/authStore";
 
 const Login = () => {
   const [currentState, setCurrentState] = useState("Login");
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
+  const login = useAuthStore((state) => state.login);
 
   const [formData, setFormData] = useState({
     name: "",
@@ -110,7 +112,13 @@ const Login = () => {
         return;
       }
 
-      // Simulate login
+      // Temporary frontend mock. The backend response must provide the role.
+      login({
+        id: "demo-buyer",
+        name: formData.name || formData.email.split("@")[0],
+        email: formData.email,
+        role: "customer",
+      });
       toast.success("Welcome back! Login successful.");
 
       // Redirect to the page they came from or home

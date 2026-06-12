@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useStore } from "../context/store";
-import { Menu, X, Filter, ChevronDown, FileHeartIcon } from "lucide-react";
-import { Link } from "react-router-dom";
+import { X, Filter, ChevronDown } from "lucide-react";
 import Title from "../components/Title";
 import ProductItems from "../components/ProductItems";
 
 const Collections = () => {
   const products = useStore((s) => s.products);
   const search = useStore((s) => s.search);
+  const category = useStore((s) => s.category);
+  const setCategory = useStore((s) => s.setCategory);
   const [filterProducts, setFilterProducts] = useState([]);
   const [visible, setVisible] = useState(false);
   const [openAccordion, setOpenAccordion] = useState(null);
@@ -17,6 +18,11 @@ const Collections = () => {
   const [selectedPriceRange, setSelectedPriceRange] = useState("");
   const [selectedAvailability, setSelectedAvailability] = useState("");
   const [sortBy, setSortBy] = useState("newest-arival");
+  const categories = [...new Set(products.map((product) => product.category))].sort();
+
+  useEffect(() => {
+    setSelectedCategory(category);
+  }, [category]);
 
   useEffect(() => {
     setFilterProducts(products);
@@ -90,7 +96,11 @@ const Collections = () => {
   const handleFilterClick = (filterType, value) => {
     switch (filterType) {
       case "category":
-        setSelectedCategory(selectedCategory === value ? "" : value);
+        {
+          const nextCategory = selectedCategory === value ? "" : value;
+          setSelectedCategory(nextCategory);
+          setCategory(nextCategory);
+        }
         break;
       case "price":
         setSelectedPriceRange(selectedPriceRange === value ? "" : value);
@@ -104,6 +114,7 @@ const Collections = () => {
 
   const clearFilters = () => {
     setSelectedCategory("");
+    setCategory("");
     setSelectedPriceRange("");
     setSelectedAvailability("");
   };
@@ -207,60 +218,19 @@ const Collections = () => {
                 </button>
                 {openAccordion === "category" && (
                   <div className="pl-10 bg-gray-50">
-                    <button
-                      onClick={() => handleFilterClick("category", "jewelry")}
-                      className={`block py-2 w-full text-left ${
-                        selectedCategory === "jewelry"
-                          ? "font-bold text-blue-600"
-                          : ""
-                      }`}
-                    >
-                      Jewelry
-                    </button>
-                    <button
-                      onClick={() => handleFilterClick("category", "fashion")}
-                      className={`block py-2 w-full text-left ${
-                        selectedCategory === "fashion"
-                          ? "font-bold text-blue-600"
-                          : ""
-                      }`}
-                    >
-                      Fashion
-                    </button>
-                    <button
-                      onClick={() =>
-                        handleFilterClick("category", "craft supplies")
-                      }
-                      className={`block py-2 w-full text-left ${
-                        selectedCategory === "craft supplies"
-                          ? "font-bold text-blue-600"
-                          : ""
-                      }`}
-                    >
-                      Craft Supplies
-                    </button>
-                    <button
-                      onClick={() =>
-                        handleFilterClick("category", "baskets & bags")
-                      }
-                      className={`block py-2 w-full text-left ${
-                        selectedCategory === "baskets & bags"
-                          ? "font-bold text-blue-600"
-                          : ""
-                      }`}
-                    >
-                      Baskets & Bags
-                    </button>
-                    <button
-                      onClick={() => handleFilterClick("category", "home deco")}
-                      className={`block py-2 w-full text-left ${
-                        selectedCategory === "home deco"
-                          ? "font-bold text-blue-600"
-                          : ""
-                      }`}
-                    >
-                      Home Deco
-                    </button>
+                    {categories.map((categoryName) => (
+                      <button
+                        key={categoryName}
+                        onClick={() => handleFilterClick("category", categoryName)}
+                        className={`block py-2 w-full text-left ${
+                          selectedCategory.toLowerCase() === categoryName.toLowerCase()
+                            ? "font-bold text-[#0d8f62]"
+                            : ""
+                        }`}
+                      >
+                        {categoryName}
+                      </button>
+                    ))}
                   </div>
                 )}
               </div>
@@ -315,7 +285,7 @@ const Collections = () => {
       {/* right side . sort options */}
       <div className="flex-1">
         <div className="flex justify-between text-base sm:text-2xl mb-4">
-          <Title text1={"All"} text2={"Collections"} />
+          <Title text1={selectedCategory || "All"} text2={selectedCategory ? "Products" : "Collections"} />
           <div>
             <p>Sort by: </p>
             <select
@@ -342,6 +312,8 @@ const Collections = () => {
               price={item.price}
               image={item.image}
               sellerId={item.sellerId}
+              rating={item.rating}
+              inStock={item.inStock}
             />
           ))}
         </div>

@@ -83,7 +83,7 @@ const SellerDashboard = () => {
         </div>
 
         {/* Financial Overview Card */}
-        <div className="bg-gray-600 rounded-lg shadow-lg p-6 mb-8 text-white">
+        <div id="payouts" className="scroll-mt-28 bg-gray-600 rounded-lg shadow-lg p-6 mb-8 text-white">
           <div className="flex items-center justify-between mb-6">
             <div className="flex items-center gap-3">
               <div className="bg-white/20 p-3 rounded-lg">
@@ -132,7 +132,7 @@ const SellerDashboard = () => {
         </div>
 
         {/* Stats Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+        <div id="analytics" className="grid scroll-mt-28 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
           {/* Total Orders */}
           <div className="bg-white rounded-lg shadow p-6">
             <div className="flex items-center justify-between mb-4">
@@ -175,7 +175,7 @@ const SellerDashboard = () => {
         </div>
 
         {/* Products Management */}
-        <div className="bg-white rounded-lg shadow p-6">
+        <div id="products" className="scroll-mt-28 bg-white rounded-lg shadow p-6">
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-xl font-semibold">My Products</h2>
             <Link
@@ -218,11 +218,13 @@ const SellerDashboard = () => {
                   >
                     <td className="py-3 px-4">
                       <div className="flex items-center gap-3">
-                        <img
-                          src={product.image[0]}
-                          alt={product.name}
-                          className="w-12 h-12 rounded object-cover"
-                        />
+                        <span className="product-media-frame h-12 w-12 shrink-0 rounded border border-slate-100">
+                          <img
+                            src={product.image[0]}
+                            alt={product.name}
+                            className="product-media-thumb"
+                          />
+                        </span>
                         <span className="font-medium">{product.name}</span>
                       </div>
                     </td>
@@ -268,7 +270,7 @@ const SellerDashboard = () => {
         </div>
 
         {/* Recent Orders */}
-        <div className="bg-white rounded-lg shadow p-6 mt-8">
+        <div id="orders" className="scroll-mt-28 bg-white rounded-lg shadow p-6 mt-8">
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-xl font-semibold">Recent Orders</h2>
             <Link

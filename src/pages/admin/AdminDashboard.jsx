@@ -11,7 +11,6 @@ import {
   Store,
 } from "lucide-react";
 import { useStore } from "../../context/store";
-import { useCartStore } from "../../context/cartStore";
 
 const AdminDashboard = () => {
   const products = useStore((s) => s.products);
@@ -86,7 +85,7 @@ const AdminDashboard = () => {
         </div>
 
         {/* Stats Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <div id="revenue" className="grid scroll-mt-28 grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           {/* Total Sales */}
           <div className="bg-white rounded-lg shadow p-6">
             <div className="flex items-center justify-between mb-4">
@@ -152,7 +151,7 @@ const AdminDashboard = () => {
         </div>
 
         {/* Quick Actions & Alerts */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+        <div id="verification" className="grid scroll-mt-28 grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
           {/* Quick Actions */}
           <div className="lg:col-span-2 bg-white rounded-lg shadow p-6">
             <h2 className="text-xl font-semibold mb-4">Quick Actions</h2>
@@ -237,7 +236,7 @@ const AdminDashboard = () => {
         </div>
 
         {/* Recent Orders */}
-        <div className="bg-white rounded-lg shadow p-6">
+        <div id="orders" className="scroll-mt-28 bg-white rounded-lg shadow p-6">
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-xl font-semibold">Recent Orders</h2>
             <Link
