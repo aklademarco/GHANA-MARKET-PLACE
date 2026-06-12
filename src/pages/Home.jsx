@@ -59,7 +59,7 @@ const Home = () => {
   return (
     <div className="bg-[#f7f9fc] pb-16">
       <section className="bg-[#0d2f57]">
-        <div className="gmp-container grid min-h-[470px] items-center gap-10 py-10 lg:grid-cols-[1.05fr_.95fr] lg:py-0">
+        <div className="gmp-container grid min-h-[560px] items-center gap-10 py-12 lg:grid-cols-[1.05fr_.95fr] lg:py-14">
           <div className="relative z-10 text-white">
             <span className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-xs font-bold uppercase tracking-wider">
               <ShieldCheck size={16} className="text-[#f4b400]" /> Ghana's verified marketplace
@@ -74,13 +74,8 @@ const Home = () => {
               <Link to="/collections" className="inline-flex items-center gap-2 rounded-xl bg-[#0d8f62] px-6 py-3.5 text-sm font-bold text-white transition hover:bg-[#0aa06d]">Explore marketplace <ArrowRight size={18} /></Link>
               <Link to="/book-shop-verification" className="inline-flex items-center gap-2 rounded-xl border border-white/30 bg-white/10 px-6 py-3.5 text-sm font-bold text-white transition hover:bg-white/20"><Store size={18} /> Book verification</Link>
             </div>
-            <div className="mt-9 flex flex-wrap gap-x-7 gap-y-3 text-xs font-semibold text-blue-100">
-              <span className="flex items-center gap-2"><BadgeCheck size={17} className="text-[#f4b400]" /> Verified sellers</span>
-              <span className="flex items-center gap-2"><ShieldCheck size={17} className="text-[#f4b400]" /> Secure payments</span>
-              <span className="flex items-center gap-2"><MapPin size={17} className="text-[#f4b400]" /> Shops across Ghana</span>
-            </div>
           </div>
-          <div className="relative hidden h-[470px] lg:block">
+          <div className="relative hidden h-[500px] lg:block">
             <div className="absolute inset-8 right-0 overflow-hidden rounded-t-[5rem] rounded-bl-[5rem] border border-white/10 bg-[#123d70]">
               <img src={assets.Hero} alt="Handmade Ghanaian products" className="h-full w-full object-cover opacity-90 mix-blend-luminosity" />
               <div className="absolute inset-0 bg-gradient-to-t from-[#081d3a]/70 via-transparent to-[#0d8f62]/20" />
@@ -95,7 +90,7 @@ const Home = () => {
         </div>
       </section>
 
-      <section className="gmp-container relative -mt-1 sm:-mt-7">
+      <section className="gmp-container relative -mt-1 sm:-mt-5">
         <div className="grid rounded-2xl bg-white px-4 py-5 shadow-[0_16px_50px_rgba(15,23,42,0.12)] sm:grid-cols-3 sm:px-7">
           {[
             [ShieldCheck, "Verified businesses", "Identity and shop location checked"],
